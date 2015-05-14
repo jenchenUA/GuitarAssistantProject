@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PatternActivity"
+            android:label="@string/title_activity_pattern" >
+        </activity>
+        <activity
+            android:name=".PentatonicActivity"
+            android:label="@string/title_activity_pentatonic" >
+        </activity>
     </application>
 
 </manifest>

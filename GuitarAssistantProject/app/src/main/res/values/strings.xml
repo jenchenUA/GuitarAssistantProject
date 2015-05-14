@@ -9,4 +9,6 @@
     <string name="primary_drawer_item_pentatonic">Pentatonic Scales</string>
     <string name="primary_drawer_item_patterns">Patterns</string>
     <string name="secondary_drawer_item_version">Version</string>
+    <string name="title_activity_pattern">PatternActivity</string>
+    <string name="title_activity_pentatonic">PentatonicActivity</string>
 </resources>

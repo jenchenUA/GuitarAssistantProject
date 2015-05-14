@@ -1,10 +1,13 @@
 package jenchenua.guitarassistantproject;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -72,6 +75,21 @@ public class ScalesActivity extends AppCompatActivity {
                 .withActionBarDrawerToggleAnimated(true)
                 .withAccountHeader(accountHeaderResult)
                 .addDrawerItems(createDrawerItem())
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        switch ((String)iDrawerItem.getTag()) {
+                            case "scale":
+                                startActivity(new Intent(getApplicationContext(), ScalesActivity.class));
+                                break;
+                            case "pattern":
+                                startActivity(new Intent(getApplicationContext(), PatternActivity.class));
+                                break;
+                            case "pentatonic":
+                                startActivity(new Intent(getApplicationContext(), PentatonicActivity.class));
+                        }
+                    }
+                })
                 .build();
     }
 
