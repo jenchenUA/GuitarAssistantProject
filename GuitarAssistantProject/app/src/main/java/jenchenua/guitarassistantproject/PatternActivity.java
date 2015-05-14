@@ -1,14 +1,29 @@
 package jenchenua.guitarassistantproject;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+
+import jenchenua.guitarassistantproject.tools.NavigatonDrawerInicialize;
 
 
 public class PatternActivity extends AppCompatActivity {
+    final static String SCALE_TAG = "scale";
+    final static String PATTERN_TAG = "pattern";
+    final static String PENTATONIC_TAG = "pentatonic";
+    final static String VERSION_TAG = "version";
+
+    private Drawer.Result drawerResult; //Declare Drawer
+    private NavigatonDrawerInicialize navigatonDrawerInicialize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +34,25 @@ public class PatternActivity extends AppCompatActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
+
+        navigatonDrawerInicialize = new NavigatonDrawerInicialize(this);
+        drawerResult = navigatonDrawerInicialize.inicializeDrawerResult(toolbar)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        switch ((String)iDrawerItem.getTag()) {
+                            case SCALE_TAG:
+                                startActivity(new Intent(getApplicationContext(), ScalesActivity.class));
+                                break;
+                            case PATTERN_TAG:
+                                startActivity(new Intent(getApplicationContext(), PatternActivity.class));
+                                break;
+                            case PENTATONIC_TAG:
+                                startActivity(new Intent(getApplicationContext(), PentatonicActivity.class));
+                        }
+                    }
+                })
+                .build();
     }
 
     @Override

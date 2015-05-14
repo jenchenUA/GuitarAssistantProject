@@ -16,9 +16,17 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import jenchenua.guitarassistantproject.tools.NavigatonDrawerInicialize;
+
 
 public class ScalesActivity extends AppCompatActivity {
+    final static String SCALE_TAG = "scale";
+    final static String PATTERN_TAG = "pattern";
+    final static String PENTATONIC_TAG = "pentatonic";
+    final static String VERSION_TAG = "version";
+
     private Drawer.Result drawerResult; //Declare Drawer
+    private NavigatonDrawerInicialize navigatonDrawerInicialize;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +39,24 @@ public class ScalesActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        initiliazeDrawerResult(toolbar);
+        navigatonDrawerInicialize = new NavigatonDrawerInicialize(this);
+        drawerResult = navigatonDrawerInicialize.inicializeDrawerResult(toolbar)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
+                        switch ((String)iDrawerItem.getTag()) {
+                            case SCALE_TAG:
+                                startActivity(new Intent(getApplicationContext(), ScalesActivity.class));
+                                break;
+                            case PATTERN_TAG:
+                                startActivity(new Intent(getApplicationContext(), PatternActivity.class));
+                                break;
+                            case PENTATONIC_TAG:
+                                startActivity(new Intent(getApplicationContext(), PentatonicActivity.class));
+                        }
+                    }
+                })
+                .build();
     }
 
     @Override
@@ -64,59 +89,4 @@ public class ScalesActivity extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-
-    private void initiliazeDrawerResult(Toolbar toolbar) {
-        AccountHeader.Result accountHeaderResult = createAccountHeader();
-
-        drawerResult = new Drawer()
-                .withActivity(this)
-                .withToolbar(toolbar)
-                .withDisplayBelowToolbar(true)
-                .withActionBarDrawerToggleAnimated(true)
-                .withAccountHeader(accountHeaderResult)
-                .addDrawerItems(createDrawerItem())
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l, IDrawerItem iDrawerItem) {
-                        switch ((String)iDrawerItem.getTag()) {
-                            case "scale":
-                                startActivity(new Intent(getApplicationContext(), ScalesActivity.class));
-                                break;
-                            case "pattern":
-                                startActivity(new Intent(getApplicationContext(), PatternActivity.class));
-                                break;
-                            case "pentatonic":
-                                startActivity(new Intent(getApplicationContext(), PentatonicActivity.class));
-                        }
-                    }
-                })
-                .build();
-    }
-
-    private AccountHeader.Result createAccountHeader() {
-        return new AccountHeader()
-                .withActivity(this)
-                .build();
-    }
-
-    //Create DrawerItems for DrawerResult
-    private IDrawerItem[] createDrawerItem() {
-        return new IDrawerItem[]{new PrimaryDrawerItem()
-                .withName(R.string.primary_drawer_item_scales)
-                .withIdentifier(1)
-                .withTag("scale"),
-                new PrimaryDrawerItem()
-                        .withName(R.string.primary_drawer_item_patterns)
-                        .withIdentifier(2)
-                        .withTag("pattern"),
-                new PrimaryDrawerItem()
-                        .withName(R.string.primary_drawer_item_pentatonic)
-                        .withIdentifier(3)
-                        .withTag("pentatonic"),
-                new DividerDrawerItem(),
-                new SecondaryDrawerItem()
-                        .withName(R.string.secondary_drawer_item_version)
-                        .withTag("version")};
-    }
-
 }
