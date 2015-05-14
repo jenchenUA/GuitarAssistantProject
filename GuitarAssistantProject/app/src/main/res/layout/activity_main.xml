@@ -2,10 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="jenchenua.guitarassistantproject.PatternActivity"
+    tools:context="jenchenua.guitarassistantproject.MainActivity"
     android:background="#F0F0F0">
 
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
+    
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+    </FrameLayout>
 
 </RelativeLayout>
