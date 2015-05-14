@@ -10,7 +10,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 
 import jenchenua.guitarassistantproject.utils.Utilities;
-import jenchenua.guitarassistantproject.utils.Utils;
+
 
 
 public class MainActivity extends AppCompatActivity {
