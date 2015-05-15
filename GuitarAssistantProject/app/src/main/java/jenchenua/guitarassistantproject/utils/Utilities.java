@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -68,6 +69,10 @@ public class Utilities {
                                     .beginTransaction()
                                     .replace(R.id.fragment_container, new PentatonicFragment())
                                     .commit();
+                            break;
+                        case 4:
+                            Log.i(LOG_TAG, "Click on Version");
+                            Toast.makeText(activity.getApplicationContext(), "Version: 0.2.5", Toast.LENGTH_SHORT).show();
                             break;
                         case 70:
                             try {
