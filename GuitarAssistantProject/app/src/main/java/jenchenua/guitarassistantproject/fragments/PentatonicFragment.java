@@ -18,7 +18,7 @@ import jenchenua.guitarassistantproject.R;
 public class PentatonicFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String[] fakeData = {"Major", "Minor", "Something", "Don't trust goat"};
+        String[] fakeData = {"One", "Two", "Three", "Four"};
 
         List<String> fakeList = new ArrayList<>(Arrays.asList(fakeData));
 

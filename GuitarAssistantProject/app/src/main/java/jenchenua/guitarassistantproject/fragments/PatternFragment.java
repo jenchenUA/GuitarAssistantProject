@@ -19,7 +19,7 @@ import jenchenua.guitarassistantproject.R;
 public class PatternFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        String[] fakeData = {"Major", "Minor", "Something", "Don't trust goat"};
+        String[] fakeData = {"Don't touch this", "You do mistake", "Wow, aliens???", "Don't trust goat"};
 
         List<String> fakeList = new ArrayList<>(Arrays.asList(fakeData));
 
