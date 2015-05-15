@@ -18,6 +18,7 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.fragments.PatternFragment;
 import jenchenua.guitarassistantproject.fragments.PentatonicFragment;

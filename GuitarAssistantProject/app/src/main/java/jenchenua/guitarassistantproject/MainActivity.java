@@ -1,13 +1,24 @@
 package jenchenua.guitarassistantproject;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import jenchenua.guitarassistantproject.utils.Utilities;
 
@@ -33,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         headerResult = Utilities.getAccountHeader(MainActivity.this, savedInstanceState);
         drawerResult = Utilities.createDrawer(MainActivity.this, toolbar, headerResult);
-        drawerResult.setSelectionByIdentifier(1, false); // Set proper selection
+        drawerResult.setSelectionByIdentifier(1, true); // Set proper selection
 
         drawerResult.openDrawer();
     }
