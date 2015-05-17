@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#689F38</color>
     <color name="colorWindowBackground">#FFFFFF</color>
     <color name="colorTextColor">#000000</color>
+    <color name="tabsScrollColor">#FFFFFF</color>
 </resources>

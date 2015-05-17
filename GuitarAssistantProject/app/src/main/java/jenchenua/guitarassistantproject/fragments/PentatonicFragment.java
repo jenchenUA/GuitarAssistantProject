@@ -1,11 +1,13 @@
 package jenchenua.guitarassistantproject.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
 
 public class PentatonicFragment extends Fragment {
@@ -32,6 +35,13 @@ public class PentatonicFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView_pentatonic);
         listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }
