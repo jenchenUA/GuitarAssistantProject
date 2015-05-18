@@ -110,8 +110,9 @@ public class Utilities {
         Drawer.Result drawerResult = new Drawer()
                 .withActivity(activity)
                 .withToolbar(toolbar)
-                .withDisplayBelowToolbar(true)
+                .withDisplayBelowToolbar(false)
                 .withActionBarDrawerToggleAnimated(true)
+                .withTranslucentStatusBar(false)
                 .withAccountHeader(accountHeader)
                 .addDrawerItems(createDrawerItems())
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
