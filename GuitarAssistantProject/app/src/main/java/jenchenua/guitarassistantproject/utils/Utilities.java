@@ -102,6 +102,7 @@ public class Utilities {
         return new AccountHeader()
                 .withActivity(activity)
                 .withSavedInstance(savedInstanceState)
+                .withHeaderBackground(R.drawable.account_header_guitar_1)
                 .build();
 
     }

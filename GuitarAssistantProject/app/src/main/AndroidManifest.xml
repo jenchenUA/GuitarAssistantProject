@@ -18,6 +18,9 @@
         <activity
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail_activity1" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="jenchenua.guitarassistantproject.MainActivity"/>
         </activity>
     </application>
 

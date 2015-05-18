@@ -1,9 +1,11 @@
 package jenchenua.guitarassistantproject;
 
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import jenchenua.guitarassistantproject.tabs.SlidingTabLayout;
 import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
@@ -26,6 +28,13 @@ public class DetailActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        try {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(), Titles, numbOfTabs);
 
@@ -47,5 +56,16 @@ public class DetailActivity extends AppCompatActivity {
 
         // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
