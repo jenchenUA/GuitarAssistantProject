@@ -22,10 +22,10 @@ public class FingeringDrawing extends View {
         mPaint = new Paint();
         mPaint.setColor(getResources().getColor(R.color.stringsColor));
 
-        drawStrings(canvas);
+        drawFingeringGrid(canvas);
     }
 
-    private void drawStrings(Canvas canvas) {
+    private void drawFingeringGrid(Canvas canvas) {
         int startStringPointX = 50;
         int stopStringPointX = canvas.getWidth() - 50;
         int startStringPointY = 50;
