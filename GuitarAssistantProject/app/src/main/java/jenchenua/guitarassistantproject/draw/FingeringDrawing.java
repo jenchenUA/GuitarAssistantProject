@@ -9,7 +9,13 @@ import android.view.View;
 import jenchenua.guitarassistantproject.R;
 
 public class FingeringDrawing extends View {
-    private Paint mPaint = null;
+    private Paint gridColor = null;
+    private Paint dotsColor = null;
+    private boolean[] switches;
+
+    public void setSwitches(boolean[] switches) {
+        this.switches = switches;
+    }
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -19,10 +25,13 @@ public class FingeringDrawing extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        mPaint = new Paint();
-        mPaint.setColor(getResources().getColor(R.color.stringsColor));
-
+        gridColor = new Paint();
+        dotsColor = new Paint();
+        gridColor.setColor(getResources().getColor(R.color.gridColor));
+        dotsColor.setColor(getResources().getColor(R.color.dotsColor));
+        
         drawFingeringGrid(canvas);
+        drawDots(canvas);
     }
 
     private void drawFingeringGrid(Canvas canvas) {
@@ -30,26 +39,47 @@ public class FingeringDrawing extends View {
         int stopStringPointX = canvas.getWidth() - 50;
         int startStringPointY = 50;
         int stopStingPointY = 52;
+        int stepY = 75;
 
         int i = 1;
         while (i++ <= 6) {
-            canvas.drawRect(startStringPointX, startStringPointY, stopStringPointX, stopStingPointY, mPaint);
+            canvas.drawRect(startStringPointX, startStringPointY, stopStringPointX, stopStingPointY, gridColor);
 
-            startStringPointY += 75;
-            stopStingPointY += 76;
+            startStringPointY += stepY;
+            stopStingPointY += stepY + 1;
         }
 
         int startFretPointX = 50;
         int stopFretPointX = 60;
         int startFretPointY = 50;
-        int stopFretPointY = stopStingPointY - 76;
+        int stopFretPointY = stopStingPointY - stepY - 1;
+        int stepX = (canvas.getWidth() - 100) / 5;
 
         int j = 1;
         while (j++ <= 6) {
-            canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, mPaint);
+            canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, gridColor);
 
-            startFretPointX += (canvas.getWidth() - 100)/5;
-            stopFretPointX += (canvas.getWidth() - 100)/5;
+            startFretPointX += stepX;
+            stopFretPointX += stepX;
         }
+    }
+
+    private void drawDots(Canvas canvas) {
+        float string1 = 51F;
+        float string2 = 126.5F;
+        float string3 = 202F;
+        float string4 = 277.5F;
+        float string5 = 353F;
+        float string6 = 428.5F;
+
+        float step = (canvas.getWidth() - 100) / 5;
+        float startX = step / 2 + 60;
+
+        canvas.drawCircle(startX, string1, 25, dotsColor);
+        canvas.drawCircle(startX, string2, 25, dotsColor);
+        canvas.drawCircle(startX, string3, 25, dotsColor);
+        canvas.drawCircle(startX, string4, 25, dotsColor);
+        canvas.drawCircle(startX, string5, 25, dotsColor);
+        canvas.drawCircle(startX, string6, 25, dotsColor);
     }
 }

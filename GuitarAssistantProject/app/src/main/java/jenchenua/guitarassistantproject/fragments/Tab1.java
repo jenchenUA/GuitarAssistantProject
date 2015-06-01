@@ -25,6 +25,7 @@ public class Tab1 extends Fragment {
         fingering.invalidate();
         description.invalidate();
 
+
         return rootView;
     }
 }
