@@ -11,6 +11,7 @@ import jenchenua.guitarassistantproject.R;
 public class FingeringDrawing extends View {
     private Paint gridColor = null;
     private Paint dotsColor = null;
+    private int width;
     private boolean[] switches;
 
     public void setSwitches(boolean[] switches) {
@@ -24,6 +25,7 @@ public class FingeringDrawing extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        width = canvas.getWidth();
 
         gridColor = new Paint();
         dotsColor = new Paint();
@@ -35,11 +37,11 @@ public class FingeringDrawing extends View {
     }
 
     private void drawFingeringGrid(Canvas canvas) {
-        int startStringPointX = 50;
-        int stopStringPointX = canvas.getWidth() - 50;
-        int startStringPointY = 50;
-        int stopStingPointY = 52;
-        int stepY = 75;
+        float startStringPointX = getPercentWidth(0.06F);
+        float stopStringPointX = getPercentWidth(0.94F);
+        float startStringPointY = 50F;
+        float stopStingPointY = 52F;
+        float stepY = 75F;
 
         int i = 1;
         while (i++ <= 6) {
@@ -49,11 +51,11 @@ public class FingeringDrawing extends View {
             stopStingPointY += stepY + 1;
         }
 
-        int startFretPointX = 50;
-        int stopFretPointX = 60;
-        int startFretPointY = 50;
-        int stopFretPointY = stopStingPointY - stepY - 1;
-        int stepX = (canvas.getWidth() - 100) / 5;
+        float startFretPointX = getPercentWidth(0.06F);
+        float stopFretPointX = getPercentWidth(0.075F);
+        float startFretPointY = 50F;
+        float stopFretPointY = stopStingPointY - stepY - 1;
+        float stepX = getPercentWidth(0.175F);
 
         int j = 1;
         while (j++ <= 6) {
@@ -65,6 +67,8 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDots(Canvas canvas) {
+        float radius = 30F;
+
         float string1 = 51F;
         float string2 = 126.5F;
         float string3 = 202F;
@@ -72,14 +76,25 @@ public class FingeringDrawing extends View {
         float string5 = 353F;
         float string6 = 428.5F;
 
+        float fret1 = getPercentWidth(0.1565F);
+        float fret2;
+        float fret3;
+        float fret4;
+        float fret5;
+
         float step = (canvas.getWidth() - 100) / 5;
         float startX = step / 2 + 60;
 
-        canvas.drawCircle(startX, string1, 25, dotsColor);
-        canvas.drawCircle(startX, string2, 25, dotsColor);
-        canvas.drawCircle(startX, string3, 25, dotsColor);
-        canvas.drawCircle(startX, string4, 25, dotsColor);
-        canvas.drawCircle(startX, string5, 25, dotsColor);
-        canvas.drawCircle(startX, string6, 25, dotsColor);
+        canvas.drawCircle(fret1, string1, radius, dotsColor);
+        canvas.drawCircle(startX, string2, radius, dotsColor);
+        canvas.drawCircle(startX, string3, radius, dotsColor);
+        canvas.drawCircle(startX, string4, radius, dotsColor);
+        canvas.drawCircle(startX, string5, radius, dotsColor);
+        canvas.drawCircle(startX, string6, radius, dotsColor);
+    }
+
+    private float getPercentWidth(float percent) {
+        int width = this.width;
+        return width * percent;
     }
 }
