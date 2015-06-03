@@ -20,10 +20,7 @@ public class Tab2 extends Fragment {
         View rootView = inflater.inflate(R.layout.tab_2, container, false);
 
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_2);
-        description = (DescriptionDrawing) rootView.findViewById(R.id.description_drawing_tab_2);
-
         fingering.invalidate();
-        description.invalidate();
 
         return rootView;
     }
