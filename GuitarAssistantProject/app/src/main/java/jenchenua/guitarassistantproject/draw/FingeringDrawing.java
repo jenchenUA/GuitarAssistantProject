@@ -44,52 +44,36 @@ public class FingeringDrawing extends View {
 
         float startStringPointX = getPercentWidth(5F);
         float stopStringPointX = getPercentWidth(93.5F);
-        /*float startStringPointY = 50F;
-        float stopStingPointY = 52F;
-        float stepY = 75F;*/
+        float startFretPointX = getPercentWidth(5F);
+        float stopFretPointX = getPercentWidth(6.5F);
+
         float startStringPointY;
         float stopStingPointY;
+        float startFretPointY;
+        float stopFretPointY;
+
         float stepY;
 
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             startStringPointY = getPercentHeight(5F);
             stopStingPointY = getPercentHeight(5.2F);
             stepY = getPercentHeight(7F);
+            startFretPointY = getPercentHeight(5F);
         } else {
             startStringPointY = getPercentHeight(10F);
             stopStingPointY = getPercentHeight(10.4F);
             stepY = getPercentHeight(15F);
-        }
-
-        stopStingPointY = drawStrings(canvas, startStringPointX, stopStringPointX, startStringPointY, stopStingPointY, stepY);
-
-        float startFretPointX = getPercentWidth(5F);
-        float stopFretPointX = getPercentWidth(6.5F);
-
-        float startFretPointY;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            startFretPointY = getPercentHeight(5F);
-        } else {
             startFretPointY = getPercentHeight(10F);
         }
 
-        float stopFretPointY = stopStingPointY - stepY - 1;
         float stepX = getStepX(startStringPointX, stopStringPointX);
+
         float[] coordinatesDotsX = getCoordinatesDotsX(startFretPointX, stopFretPointX, stepX);
+        float[] coordinatesDotsY = getCoordinatesDotsY(startStringPointY, stopStingPointY, stepY);
 
+        stopFretPointY = drawStrings(canvas, startStringPointX, stopStringPointX, startStringPointY, stopStingPointY, stepY);
         drawFrets(canvas, startFretPointX, stopFretPointX, startFretPointY, stopFretPointY, stepX);
-
-        drawDots(canvas, coordinatesDotsX);
-    }
-
-    private void drawFrets(Canvas canvas, float startFretPointX, float stopFretPointX, float startFretPointY, float stopFretPointY, float stepX) {
-        int j = 1;
-        while (j++ <= 6) {
-            canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, gridColor);
-
-            startFretPointX += stepX;
-            stopFretPointX += stepX;
-        }
+        drawDots(canvas, coordinatesDotsX, coordinatesDotsY);
     }
 
     private float drawStrings(Canvas canvas, float startStringPointX, float stopStringPointX, float startStringPointY, float stopStingPointY, float stepY) {
@@ -98,26 +82,39 @@ public class FingeringDrawing extends View {
             canvas.drawRect(startStringPointX, startStringPointY, stopStringPointX, stopStingPointY, gridColor);
 
             startStringPointY += stepY;
-            stopStingPointY += stepY + 1;
+            if (i <= 6) {
+                stopStingPointY += stepY + 1;
+            }
         }
+
         return stopStingPointY;
     }
 
-    private void drawDots(Canvas canvas, float[] coordinatesX) {
-        float radius = 30F;
+    private void drawFrets(Canvas canvas, float startFretPointX, float stopFretPointX, float startFretPointY, float stopFretPointY, float stepX) {
+        int i = 1;
+        while (i++ <= 6) {
+            canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, gridColor);
 
-        float string1 = 51F;
-        float string2 = 126.5F;
-        float string3 = 202F;
-        float string4 = 277.5F;
-        float string5 = 353F;
-        float string6 = 428.5F;
+            startFretPointX += stepX;
+            stopFretPointX += stepX;
+        }
+    }
+
+    private void drawDots(Canvas canvas, float[] coordinatesX, float[] coordinatesY) {
+        float radius = 30F;
 
         float fret1 = coordinatesX[0];
         float fret2 = coordinatesX[1];
         float fret3 = coordinatesX[2];
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
+
+        float string1 = coordinatesY[0];
+        float string2 = coordinatesY[1];
+        float string3 = coordinatesY[2];
+        float string4 = coordinatesY[3];
+        float string5 = coordinatesY[4];
+        float string6 = coordinatesY[5];
 
         canvas.drawCircle(fret1, string1, radius, dotsColor);
         canvas.drawCircle(fret2, string2, radius, dotsColor);
@@ -132,12 +129,32 @@ public class FingeringDrawing extends View {
 
         float distanceToCentreFret = (startFretX + stepX - stopFretX) / 2;
 
-        coordinates[0] = stopFretX + distanceToCentreFret;
-        coordinates[1] = stopFretX + stepX + distanceToCentreFret;
-        coordinates[2] = stopFretX + (stepX * 2) + distanceToCentreFret;
-        coordinates[3] = stopFretX + (stepX * 3) + distanceToCentreFret;
-        coordinates[4] = stopFretX + (stepX * 4) + distanceToCentreFret;
+        for (int i = 0; i < 5; i++) {
+            if (i == 0)
+                coordinates[i] = stopFretX + distanceToCentreFret;
+            else if (i == 1)
+                coordinates[i] = stopFretX + stepX + distanceToCentreFret;
+            else
+                coordinates[i] = stopFretX + (stepX * i) + distanceToCentreFret;
+        }
 
+        return coordinates;
+    }
+
+    private float[] getCoordinatesDotsY(float startStringY, float stopFretY, float stepY) {
+        float[] coordinates = new float[6];
+        for (int i = 0; i < 6; i++) {
+            float distanceToCenterString = (stopFretY - startStringY) / 2;
+            if (i != 0) {
+                distanceToCenterString = (stopFretY - startStringY + i) / 2;
+            }
+            if (i == 0)
+                coordinates[i] = startStringY + distanceToCenterString;
+            else if (i == 1)
+                    coordinates[i] = startStringY + stepY + distanceToCenterString;
+            else
+                coordinates[i] = startStringY + (stepY * i) + distanceToCenterString;
+        }
         return coordinates;
     }
 
