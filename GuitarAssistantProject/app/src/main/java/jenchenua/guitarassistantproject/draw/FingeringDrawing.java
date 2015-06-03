@@ -43,6 +43,9 @@ public class FingeringDrawing extends View {
         /*float startStringPointY = 50F;
         float stopStingPointY = 52F;
         float stepY = 75F;*/
+        if (true) {
+
+        }
         float startStringPointY = getPercentHeight(5F);
         float stopStingPointY = getPercentHeight(5.2F);
         float stepY = getPercentHeight(7F);
