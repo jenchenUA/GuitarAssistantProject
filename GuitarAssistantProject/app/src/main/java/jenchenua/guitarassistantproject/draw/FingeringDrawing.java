@@ -1,6 +1,7 @@
 package jenchenua.guitarassistantproject.draw;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
@@ -13,6 +14,7 @@ public class FingeringDrawing extends View {
     private Paint dotsColor = null;
     private int width;
     private int height;
+
     private boolean[] switches;
 
     public void setSwitches(boolean[] switches) {
@@ -38,21 +40,39 @@ public class FingeringDrawing extends View {
     }
 
     private void drawFingering(Canvas canvas) {
+        int orientation = getResources().getConfiguration().orientation;
+
         float startStringPointX = getPercentWidth(5F);
         float stopStringPointX = getPercentWidth(93.5F);
         /*float startStringPointY = 50F;
         float stopStingPointY = 52F;
         float stepY = 75F;*/
-        float startStringPointY = getPercentHeight(5F);
-        float stopStingPointY = getPercentHeight(5.2F);
-        float stepY = getPercentHeight(7F);
+        float startStringPointY;
+        float stopStingPointY;
+        float stepY;
 
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            startStringPointY = getPercentHeight(5F);
+            stopStingPointY = getPercentHeight(5.2F);
+            stepY = getPercentHeight(7F);
+        } else {
+            startStringPointY = getPercentHeight(10F);
+            stopStingPointY = getPercentHeight(10.4F);
+            stepY = getPercentHeight(15F);
+        }
 
         stopStingPointY = drawStrings(canvas, startStringPointX, stopStringPointX, startStringPointY, stopStingPointY, stepY);
 
         float startFretPointX = getPercentWidth(5F);
         float stopFretPointX = getPercentWidth(6.5F);
-        float startFretPointY = getPercentHeight(5F);
+
+        float startFretPointY;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            startFretPointY = getPercentHeight(5F);
+        } else {
+            startFretPointY = getPercentHeight(10F);
+        }
+
         float stopFretPointY = stopStingPointY - stepY - 1;
         float stepX = getStepX(startStringPointX, stopStringPointX);
         float[] coordinatesDotsX = getCoordinatesDotsX(startFretPointX, stopFretPointX, stepX);
