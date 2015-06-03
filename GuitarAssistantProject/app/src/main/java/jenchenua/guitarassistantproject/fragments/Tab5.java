@@ -21,7 +21,6 @@ public class Tab5 extends Fragment {
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_5);
         fingering.invalidate();
 
-
         return rootView;
     }
 }
