@@ -206,6 +206,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString1(Canvas canvas, float[] coordinatesX, float string1, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the first string.");
 
         for (int i = 25, j = 0; i <= 29; i++, j++) {
@@ -219,6 +220,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString2(Canvas canvas, float[] coordinatesX, float string2, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the second string.");
 
         for (int i = 20, j = 0; i <= 24; i++, j++) {
@@ -232,6 +234,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString3(Canvas canvas, float[] coordinatesX, float string3, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the third string.");
 
         for (int i = 15, j = 0; i <= 19; i++, j++) {
@@ -245,6 +248,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString4(Canvas canvas, float[] coordinatesX, float string4, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the fourth string.");
 
         for (int i = 10, j = 0; i <= 14; i++, j++) {
@@ -258,6 +262,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString5(Canvas canvas, float[] coordinatesX, float string5, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the fifth string.");
 
         for (int i = 5, j = 0; i <= 9; i++, j++) {
@@ -271,6 +276,7 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString6(Canvas canvas, float[] coordinatesX, float string6, float radius) {
+
         Log.i(LOG_TAG, "Drawing dots on the sixth string.");
 
         for (int i = 0, j = 0; i <= 4; i++, j++) {
