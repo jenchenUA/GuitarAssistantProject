@@ -16,13 +16,14 @@ public class FingeringDrawing extends View {
 
     private Paint gridColor = null;
     private Paint dotsColor = null;
+    private Paint tonicDotsColor2 = null;
 
     private int width;
     private int height;
 
     private int orientation;
 
-    private boolean[] switches;
+    private int[] switches;
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -42,11 +43,14 @@ public class FingeringDrawing extends View {
 
         dotsColor = new Paint();
         dotsColor.setColor(getResources().getColor(R.color.dotsColor));
+
+        tonicDotsColor2 = new Paint();
+        tonicDotsColor2.setColor(getResources().getColor(R.color.tonicDotsColor));
         
         drawFingering(canvas);
     }
 
-    public void setSwitches(boolean[] switches) {
+    public void setSwitches(int[] switches) {
         this.switches = switches;
     }
 
@@ -210,16 +214,36 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[25])
-            canvas.drawCircle(fret1, string1, radius, dotsColor);
-        if (switches[26])
-            canvas.drawCircle(fret2, string1, radius, dotsColor);
-        if (switches[27])
-            canvas.drawCircle(fret3, string1, radius, dotsColor);
-        if (switches[28])
-            canvas.drawCircle(fret4, string1, radius, dotsColor);
-        if (switches[29])
-            canvas.drawCircle(fret5, string1, radius, dotsColor);
+        if (switches[25] == 1 || switches[25] == 2)
+            if (switches[25] == 2) {
+                canvas.drawCircle(fret1, string1, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string1, radius, dotsColor);
+            }
+        if (switches[26] == 1 || switches[26] == 2)
+            if (switches[26] == 2) {
+                canvas.drawCircle(fret2, string1, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string1, radius, dotsColor);
+            }
+        if (switches[27] == 1 || switches[27] == 2)
+            if (switches[27] == 2) {
+                canvas.drawCircle(fret3, string1, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string1, radius, dotsColor);
+            }
+        if (switches[28] == 1 || switches[28] == 2)
+            if (switches[28] == 2) {
+                canvas.drawCircle(fret4, string1, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string1, radius, dotsColor);
+            }
+        if (switches[29] == 1 || switches[29] == 2)
+            if (switches[29] == 2) {
+                canvas.drawCircle(fret5, string1, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string1, radius, dotsColor);
+            }
     }
 
     private void drawDotsOnString2(Canvas canvas, float[] coordinatesX, float string2, float radius) {
@@ -231,16 +255,36 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[20])
-            canvas.drawCircle(fret1, string2, radius, dotsColor);
-        if (switches[21])
-            canvas.drawCircle(fret2, string2, radius, dotsColor);
-        if (switches[22])
-            canvas.drawCircle(fret3, string2, radius, dotsColor);
-        if (switches[23])
-            canvas.drawCircle(fret4, string2, radius, dotsColor);
-        if (switches[24])
-            canvas.drawCircle(fret5, string2, radius, dotsColor);
+        if (switches[20] == 1 || switches[20] == 2)
+            if (switches[20] == 2) {
+                canvas.drawCircle(fret1, string2, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string2, radius, dotsColor);
+            }
+        if (switches[21] == 1 || switches[21] == 2)
+            if (switches[21] == 2) {
+                canvas.drawCircle(fret2, string2, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string2, radius, dotsColor);
+            }
+        if (switches[22] == 1 || switches[22] == 2)
+            if (switches[22] == 2) {
+                canvas.drawCircle(fret3, string2, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string2, radius, dotsColor);
+            }
+        if (switches[23] == 1 || switches[23] == 2)
+            if (switches[23] == 2) {
+                canvas.drawCircle(fret4, string2, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string2, radius, dotsColor);
+            }
+        if (switches[24] == 1 || switches[24] == 2)
+            if (switches[24] == 2) {
+                canvas.drawCircle(fret5, string2, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string2, radius, dotsColor);
+            }
     }
 
     private void drawDotsOnString3(Canvas canvas, float[] coordinatesX, float string3, float radius) {
@@ -252,16 +296,36 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[15])
-            canvas.drawCircle(fret1, string3, radius, dotsColor);
-        if (switches[16])
-            canvas.drawCircle(fret2, string3, radius, dotsColor);
-        if (switches[17])
-            canvas.drawCircle(fret3, string3, radius, dotsColor);
-        if (switches[18])
-            canvas.drawCircle(fret4, string3, radius, dotsColor);
-        if (switches[19])
-            canvas.drawCircle(fret5, string3, radius, dotsColor);
+        if (switches[15] == 1 || switches[15] == 2)
+            if (switches[15] == 2) {
+                canvas.drawCircle(fret1, string3, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string3, radius, dotsColor);
+            }
+        if (switches[16] == 1 || switches[16] == 2)
+            if (switches[16] == 2) {
+                canvas.drawCircle(fret2, string3, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string3, radius, dotsColor);
+            }
+        if (switches[17] == 1 || switches[17] == 2)
+            if (switches[17] == 2) {
+                canvas.drawCircle(fret3, string3, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string3, radius, dotsColor);
+            }
+        if (switches[18] == 1 || switches[18] == 2)
+            if (switches[18] == 2) {
+                canvas.drawCircle(fret4, string3, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string3, radius, dotsColor);
+            }
+        if (switches[19] == 1 || switches[19] == 2)
+            if (switches[19] == 2) {
+                canvas.drawCircle(fret5, string3, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string3, radius, dotsColor);
+            }
     }
 
     private void drawDotsOnString4(Canvas canvas, float[] coordinatesX, float string4, float radius) {
@@ -273,16 +337,36 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[10])
-            canvas.drawCircle(fret1, string4, radius, dotsColor);
-        if (switches[11])
-            canvas.drawCircle(fret2, string4, radius, dotsColor);
-        if (switches[12])
-            canvas.drawCircle(fret3, string4, radius, dotsColor);
-        if (switches[13])
-            canvas.drawCircle(fret4, string4, radius, dotsColor);
-        if (switches[14])
-            canvas.drawCircle(fret5, string4, radius, dotsColor);
+        if (switches[10] == 1 || switches[10] == 2)
+            if (switches[10] == 2) {
+                canvas.drawCircle(fret1, string4, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string4, radius, dotsColor);
+            }
+        if (switches[11] == 1 || switches[11] == 2)
+            if (switches[11] == 2) {
+                canvas.drawCircle(fret2, string4, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string4, radius, dotsColor);
+            }
+        if (switches[12] == 1 || switches[12] == 2)
+            if (switches[12] == 2) {
+                canvas.drawCircle(fret3, string4, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string4, radius, dotsColor);
+            }
+        if (switches[13] == 1 || switches[13] == 2)
+            if (switches[13] == 2) {
+                canvas.drawCircle(fret4, string4, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string4, radius, dotsColor);
+            }
+        if (switches[14] == 1 || switches[14] == 2)
+            if (switches[14] == 2) {
+                canvas.drawCircle(fret5, string4, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string4, radius, dotsColor);
+            }
     }
 
     private void drawDotsOnString5(Canvas canvas, float[] coordinatesX, float string5, float radius) {
@@ -294,16 +378,36 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[5])
-            canvas.drawCircle(fret1, string5, radius, dotsColor);
-        if (switches[6])
-            canvas.drawCircle(fret2, string5, radius, dotsColor);
-        if (switches[7])
-            canvas.drawCircle(fret3, string5, radius, dotsColor);
-        if (switches[8])
-            canvas.drawCircle(fret4, string5, radius, dotsColor);
-        if (switches[9])
-            canvas.drawCircle(fret5, string5, radius, dotsColor);
+        if (switches[5] == 1 || switches[5] == 2)
+            if (switches[5] == 2) {
+                canvas.drawCircle(fret1, string5, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string5, radius, dotsColor);
+            }
+        if (switches[6] == 1 || switches[6] == 2)
+            if (switches[6] == 2) {
+                canvas.drawCircle(fret2, string5, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string5, radius, dotsColor);
+            }
+        if (switches[7] == 1 || switches[7] == 2)
+            if (switches[7] == 2) {
+                canvas.drawCircle(fret3, string5, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string5, radius, dotsColor);
+            }
+        if (switches[8] == 1 || switches[8] == 2)
+            if (switches[8] == 2) {
+                canvas.drawCircle(fret4, string5, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string5, radius, dotsColor);
+            }
+        if (switches[9] == 1 || switches[9] == 2)
+            if (switches[9] == 2) {
+                canvas.drawCircle(fret5, string5, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string5, radius, dotsColor);
+            }
     }
 
     private void drawDotsOnString6(Canvas canvas, float[] coordinatesX, float string6, float radius) {
@@ -315,15 +419,35 @@ public class FingeringDrawing extends View {
         float fret4 = coordinatesX[3];
         float fret5 = coordinatesX[4];
 
-        if (switches[0])
-            canvas.drawCircle(fret1, string6, radius, dotsColor);
-        if (switches[1])
-            canvas.drawCircle(fret2, string6, radius, dotsColor);
-        if (switches[2])
-            canvas.drawCircle(fret3, string6, radius, dotsColor);
-        if (switches[3])
-            canvas.drawCircle(fret4, string6, radius, dotsColor);
-        if (switches[4])
-            canvas.drawCircle(fret5, string6, radius, dotsColor);
+        if (switches[0] == 1 || switches[0] == 2)
+            if (switches[0] == 2) {
+                canvas.drawCircle(fret1, string6, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret1, string6, radius, dotsColor);
+            }
+        if (switches[1] == 1 || switches[1] == 2)
+            if (switches[1] == 2) {
+                canvas.drawCircle(fret2, string6, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret2, string6, radius, dotsColor);
+            }
+        if (switches[2] == 1 || switches[2] == 2)
+            if (switches[2] == 2) {
+                canvas.drawCircle(fret3, string6, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret3, string6, radius, dotsColor);
+            }
+        if (switches[3] == 1 || switches[3] == 2)
+            if (switches[3] == 2) {
+                canvas.drawCircle(fret4, string6, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret4, string6, radius, dotsColor);
+            }
+        if (switches[4] == 1 || switches[4] == 2)
+            if (switches[4] == 2) {
+                canvas.drawCircle(fret5, string6, radius, tonicDotsColor2);
+            } else {
+                canvas.drawCircle(fret5, string6, radius, dotsColor);
+            }
     }
 }

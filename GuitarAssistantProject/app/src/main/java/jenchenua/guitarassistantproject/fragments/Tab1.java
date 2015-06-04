@@ -12,13 +12,13 @@ import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab1 extends Fragment {
     private FingeringDrawing fingering = null;
-    private boolean[] switches = {
-            false, true, false, true, true,
-            false, true, false, true, true,
-            false, true, false, true, false,
-            true, true, false, true, false,
-            false, true, true, false, true,
-            false, true, false, true, true
+    private int[] switches = {
+            0, 2, 0, 1, 1,
+            0, 1, 0, 1, 1,
+            0, 1, 0, 2, 0,
+            1, 1, 0, 1, 0,
+            0, 1, 1, 0, 1,
+            0, 2, 0, 1, 1
     };
 
     @Override
@@ -30,7 +30,6 @@ public class Tab1 extends Fragment {
         fingering.setSwitches(switches);
 
         fingering.invalidate();
-
 
         return rootView;
     }
