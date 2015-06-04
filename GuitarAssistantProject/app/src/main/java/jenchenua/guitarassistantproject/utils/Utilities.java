@@ -3,13 +3,20 @@ package jenchenua.guitarassistantproject.utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
@@ -18,6 +25,9 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import java.util.List;
+
+import jenchenua.guitarassistantproject.BuildConfig;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.fragments.PatternFragment;
@@ -25,7 +35,7 @@ import jenchenua.guitarassistantproject.fragments.PentatonicFragment;
 import jenchenua.guitarassistantproject.fragments.ScaleFragment;
 
 public class Utilities {
-
+    private static final String version = "Version: " + BuildConfig.VERSION_NAME + '.' + BuildConfig.VERSION_CODE;
     private static final String LOG_TAG = "Utilities";
 
     public static void hideSoftKeyboard(Activity activity) {
@@ -69,6 +79,10 @@ public class Utilities {
                                     .replace(R.id.fragment_container, new PentatonicFragment())
                                     .commit();
                             break;
+                        case 4:
+                            Log.i(LOG_TAG, "Click on Version");
+                            Toast.makeText(activity.getApplicationContext(), version, Toast.LENGTH_SHORT).show();
+                            break;
                         case 70:
                             try {
                                 Intent int_rate = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.getApplicationContext().getPackageName()));
@@ -88,6 +102,7 @@ public class Utilities {
         return new AccountHeader()
                 .withActivity(activity)
                 .withSavedInstance(savedInstanceState)
+                .withHeaderBackground(R.drawable.account_header_guitar_1)
                 .build();
 
     }
@@ -96,8 +111,9 @@ public class Utilities {
         Drawer.Result drawerResult = new Drawer()
                 .withActivity(activity)
                 .withToolbar(toolbar)
-                .withDisplayBelowToolbar(true)
+                .withDisplayBelowToolbar(false)
                 .withActionBarDrawerToggleAnimated(true)
+                .withTranslucentStatusBar(false)
                 .withAccountHeader(accountHeader)
                 .addDrawerItems(createDrawerItems())
                 .withOnDrawerListener(new Drawer.OnDrawerListener() {
