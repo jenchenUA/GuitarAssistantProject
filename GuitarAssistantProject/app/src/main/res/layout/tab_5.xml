@@ -8,10 +8,5 @@
     <jenchenua.guitarassistantproject.draw.FingeringDrawing
         android:id="@+id/fingering_drawing_tab_5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <jenchenua.guitarassistantproject.draw.DescriptionDrawing
-        android:id="@+id/description_drawing_tab_5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 </LinearLayout>
