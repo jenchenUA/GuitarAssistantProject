@@ -190,102 +190,20 @@ public class FingeringDrawing extends View {
             radius = getPercentWidth(2.5F);
         }
 
-        float string1 = coordinatesY[0];
-        float string2 = coordinatesY[1];
-        float string3 = coordinatesY[2];
-        float string4 = coordinatesY[3];
-        float string5 = coordinatesY[4];
-        float string6 = coordinatesY[5];
-
-        drawDotsOnString6(canvas, coordinatesX, string6, radius);
-        drawDotsOnString5(canvas, coordinatesX, string5, radius);
-        drawDotsOnString4(canvas, coordinatesX, string4, radius);
-        drawDotsOnString3(canvas, coordinatesX, string3, radius);
-        drawDotsOnString2(canvas, coordinatesX, string2, radius);
-        drawDotsOnString1(canvas, coordinatesX, string1, radius);
+        drawDotsOnString(canvas, coordinatesX, coordinatesY, radius);
     }
 
-    private void drawDotsOnString1(Canvas canvas, float[] coordinatesX, float string1, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the first string.");
-
-        for (int i = 25, j = 0; i <= 29; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string1, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string1, radius, dotsColor);
-                }
-        }
-    }
-
-    private void drawDotsOnString2(Canvas canvas, float[] coordinatesX, float string2, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the second string.");
-
-        for (int i = 20, j = 0; i <= 24; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string2, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string2, radius, dotsColor);
-                }
-        }
-    }
-
-    private void drawDotsOnString3(Canvas canvas, float[] coordinatesX, float string3, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the third string.");
-
-        for (int i = 15, j = 0; i <= 19; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string3, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string3, radius, dotsColor);
-                }
-        }
-    }
-
-    private void drawDotsOnString4(Canvas canvas, float[] coordinatesX, float string4, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the fourth string.");
-
-        for (int i = 10, j = 0; i <= 14; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string4, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string4, radius, dotsColor);
-                }
-        }
-    }
-
-    private void drawDotsOnString5(Canvas canvas, float[] coordinatesX, float string5, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the fifth string.");
-
-        for (int i = 5, j = 0; i <= 9; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string5, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string5, radius, dotsColor);
-                }
-        }
-    }
-
-    private void drawDotsOnString6(Canvas canvas, float[] coordinatesX, float string6, float radius) {
-
-        Log.i(LOG_TAG, "Drawing dots on the sixth string.");
-
-        for (int i = 0, j = 0; i <= 4; i++, j++) {
-            if (switches[i] == 1 || switches[i] == 2)
-                if (switches[i] == 2) {
-                    canvas.drawCircle(coordinatesX[j], string6, radius, tonicDotsColor2);
-                } else {
-                    canvas.drawCircle(coordinatesX[j], string6, radius, dotsColor);
-                }
+    private void drawDotsOnString(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
+        int k = 0;
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 4; j++, k++) {
+                if (switches[k] == 1 || switches[k] == 2)
+                    if (switches[k] == 2) {
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor2);
+                    } else {
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    }
+            }
         }
     }
 }
