@@ -23,7 +23,7 @@ public class FingeringDrawing extends View {
 
     private int orientation;
 
-    private int[] switches;
+    private byte[] switches;
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -50,7 +50,7 @@ public class FingeringDrawing extends View {
         drawFingering(canvas);
     }
 
-    public void setSwitches(int[] switches) {
+    public void setSwitches(byte[] switches) {
         this.switches = switches;
     }
 

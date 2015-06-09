@@ -11,7 +11,7 @@ import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab4 extends Fragment {
     private FingeringDrawing fingering = null;
-    private int[] switches = {
+    private byte[] switches = {
             0, 1, 1, 0, 1,
             0, 1, 1, 0, 1,
             0, 1, 0, 2, 0,
