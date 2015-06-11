@@ -17,7 +17,7 @@ public class DetailActivity extends AppCompatActivity {
     ViewPager pager = null;
     ViewPagerAdapter adapter = null;
     SlidingTabLayout tabs = null;
-    CharSequence Titles[]={"Position 1", "Position 2", "Position 3", "Position 4", "Position 5"};
+    CharSequence Titles[]={"Box 1", "Box 2", "Box 3", "Box 4", "Box 5"};
     final int numbOfTabs = 5;
 
     @Override
