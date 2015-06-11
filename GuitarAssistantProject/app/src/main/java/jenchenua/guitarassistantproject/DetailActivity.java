@@ -12,7 +12,7 @@ import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
 
 
 public class DetailActivity extends AppCompatActivity {
-    // Declaring Your View and Variables
+
     Toolbar toolbar = null;
     ViewPager pager = null;
     ViewPagerAdapter adapter = null;

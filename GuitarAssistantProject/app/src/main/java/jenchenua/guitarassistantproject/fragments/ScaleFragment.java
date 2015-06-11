@@ -17,7 +17,6 @@ import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.GuitarAssistantDB;
 
 public class ScaleFragment extends android.support.v4.app.Fragment {
 

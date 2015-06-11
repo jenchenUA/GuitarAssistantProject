@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.GuitarAssistantDB;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 
