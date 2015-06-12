@@ -34,8 +34,20 @@ public class Tab5 extends Fragment {
         DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME, MINOR, WHERE, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(
+                TABLE_NAME,
+                MINOR,
+                WHERE,
+                null,
+                null,
+                null,
+                null
+        );
 
+        cursor.moveToFirst();
+        switches = cursor.getBlob(cursor.getColumnIndex("box_5"));
+
+        sqLiteDatabase.close();
 
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_5);
 
