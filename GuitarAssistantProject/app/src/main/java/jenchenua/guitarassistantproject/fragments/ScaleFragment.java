@@ -28,6 +28,39 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_scale, container, false);
+
+        getScaleListFromDB();
+
+        createListView(rootView);
+
+        return rootView;
+    }
+
+    private void createListView(View rootView) {
+        mScaleAdapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.fragment_list_item,
+                R.id.card_view_textView,
+                scaleList);
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listView_scale);
+        listView.setAdapter(mScaleAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String fingeringName = mScaleAdapter.getItem(position);
+
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
+                intent.putExtra("fingeringName", fingeringName);
+
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void getScaleListFromDB() {
         DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
@@ -49,29 +82,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
             scaleList.add(cursor.getString(cursor.getColumnIndex(ScaleEntry.NAME_COLUMN)));
         } while (cursor.moveToNext());
 
-        mScaleAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.fragment_list_item,
-                R.id.card_view_textView,
-                scaleList);
-
-        View rootView = inflater.inflate(R.layout.fragment_scale, container, false);
-
-        ListView listView = (ListView) rootView.findViewById(R.id.listView_scale);
-        listView.setAdapter(mScaleAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String fingeringName = mScaleAdapter.getItem(position);
-
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
-                intent.putExtra("fingeringName", fingeringName);
-
-                startActivity(intent);
-            }
-        });
-
-        return rootView;
+        dbHelper.close();
+        cursor.close();
     }
 }

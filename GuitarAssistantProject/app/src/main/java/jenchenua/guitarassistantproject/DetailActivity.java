@@ -13,7 +13,6 @@ import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
 
 public class DetailActivity extends AppCompatActivity {
 
-
     private Toolbar toolbar = null;
 
     private ViewPager pager = null;
@@ -28,6 +27,7 @@ public class DetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
