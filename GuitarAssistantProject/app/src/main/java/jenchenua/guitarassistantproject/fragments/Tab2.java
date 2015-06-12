@@ -48,6 +48,7 @@ public class Tab2 extends Fragment {
         switches = cursor.getBlob(cursor.getColumnIndex(FingeringDatabase.BOX_2_COLUMN));
 
         sqLiteDatabase.close();
+        cursor.close();
 
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_2);
 
