@@ -27,6 +27,21 @@ public class Tab1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_1, container, false);
 
+        getSwitchesFromDB();
+        draw(rootView);
+
+        return rootView;
+    }
+
+    private void draw(View rootView) {
+        fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_1);
+
+        fingering.setSwitches(switches);
+
+        fingering.invalidate();
+    }
+
+    private void getSwitchesFromDB() {
         DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
@@ -49,13 +64,5 @@ public class Tab1 extends Fragment {
 
         sqLiteDatabase.close();
         cursor.close();
-
-        fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_1);
-
-        fingering.setSwitches(switches);
-
-        fingering.invalidate();
-
-        return rootView;
     }
 }
