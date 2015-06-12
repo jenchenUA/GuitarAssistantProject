@@ -22,6 +22,8 @@ import jenchenua.guitarassistantproject.database.FingeringDatabase.ScaleEntry;
 public class ScaleFragment extends android.support.v4.app.Fragment {
     public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {ScaleEntry.NAME_COLUMN};
 
+    private ArrayAdapter<String> mScaleAdapter;
+
     private List<String> scaleList;
 
     @Override
@@ -47,7 +49,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
             scaleList.add(cursor.getString(cursor.getColumnIndex(ScaleEntry.NAME_COLUMN)));
         } while (cursor.moveToNext());
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+        mScaleAdapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.fragment_list_item,
                 R.id.card_view_textView,
@@ -56,11 +58,16 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         View rootView = inflater.inflate(R.layout.fragment_scale, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView_scale);
-        listView.setAdapter(arrayAdapter);
+        listView.setAdapter(mScaleAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String fingeringName = mScaleAdapter.getItem(position);
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
+                intent.putExtra("fingeringName", fingeringName);
+
                 startActivity(intent);
             }
         });

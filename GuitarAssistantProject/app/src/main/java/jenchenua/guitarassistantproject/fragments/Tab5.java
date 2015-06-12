@@ -10,22 +10,17 @@ import android.view.ViewGroup;
 
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
+import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab5 extends Fragment {
-    private static final String TABLE_NAME = "Scale";
-    private static final String[] MINOR = {"box_5"};
-    private static final String WHERE = "name = \"Aeolian (Minor)\"";
+    private static final String[] TAB_NAME = {FingeringDatabase.BOX_5_COLUMN};
+
+    private String fingeringName;
 
     private FingeringDrawing fingering = null;
-    private byte[] switches = {
-            0,0,0,0,0,
-            0,0,0,0,0,
-            0,0,0,0,0,
-            0,0,0,0,0,
-            0,0,0,0,0,
-            0,0,0,0,0
-    };
+
+    private byte[] switches;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,9 +29,13 @@ public class Tab5 extends Fragment {
         DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
 
+        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
+        final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
+        final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
+
         Cursor cursor = sqLiteDatabase.query(
                 TABLE_NAME,
-                MINOR,
+                TAB_NAME,
                 WHERE,
                 null,
                 null,
@@ -45,7 +44,7 @@ public class Tab5 extends Fragment {
         );
 
         cursor.moveToFirst();
-        switches = cursor.getBlob(cursor.getColumnIndex("box_5"));
+        switches = cursor.getBlob(cursor.getColumnIndex(FingeringDatabase.BOX_5_COLUMN));
 
         sqLiteDatabase.close();
 
