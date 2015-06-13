@@ -73,8 +73,5 @@ public class Tab1 extends Fragment {
 
         cursor.moveToFirst();
         switches = cursor.getBlob(cursor.getColumnIndex(FingeringDatabase.BOX_1_COLUMN));
-
-        sqLiteDatabase.close();
-        cursor.close();
     }
 }
