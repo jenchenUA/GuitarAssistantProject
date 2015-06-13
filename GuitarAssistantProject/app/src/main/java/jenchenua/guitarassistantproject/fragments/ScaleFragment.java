@@ -20,6 +20,10 @@ import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.ScaleEntry;
 
 public class ScaleFragment extends android.support.v4.app.Fragment {
+    private DBHelper dbHelper;
+    private SQLiteDatabase sqLiteDatabase;
+    private Cursor cursor;
+
     public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {ScaleEntry.NAME_COLUMN};
 
     private ArrayAdapter<String> mScaleAdapter;
@@ -35,6 +39,15 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         createListView(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        cursor.close();
+        sqLiteDatabase.close();
+        dbHelper.close();
     }
 
     private void createListView(View rootView) {
@@ -61,10 +74,10 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
     }
 
     private void getScaleListFromDB() {
-        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
-        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        dbHelper = new DBHelper(getActivity().getApplicationContext());
+        sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        Cursor cursor = sqLiteDatabase.query(
+        cursor = sqLiteDatabase.query(
                 ScaleEntry.TABLE_NAME,
                 LIST_NAME_COLUMN_FOR_SQL_QUERY,
                 null,
@@ -81,8 +94,5 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         do {
             scaleList.add(cursor.getString(cursor.getColumnIndex(ScaleEntry.NAME_COLUMN)));
         } while (cursor.moveToNext());
-
-        dbHelper.close();
-        cursor.close();
     }
 }

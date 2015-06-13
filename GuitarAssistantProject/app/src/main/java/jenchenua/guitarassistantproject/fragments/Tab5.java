@@ -14,6 +14,10 @@ import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab5 extends Fragment {
+    private DBHelper dbHelper;
+    private SQLiteDatabase sqLiteDatabase;
+    private Cursor cursor;
+
     private static final String[] TAB_NAME = {FingeringDatabase.BOX_5_COLUMN};
 
     private String fingeringName;
@@ -32,6 +36,14 @@ public class Tab5 extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cursor.close();
+        sqLiteDatabase.close();
+        dbHelper.close();
+    }
+
     private void draw(View rootView) {
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_5);
 
@@ -41,14 +53,14 @@ public class Tab5 extends Fragment {
     }
 
     private void getSwitchesFromDB() {
-        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
-        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        dbHelper = new DBHelper(getActivity().getApplicationContext());
+        sqLiteDatabase = dbHelper.getReadableDatabase();
 
         fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
         final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
         final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
 
-        Cursor cursor = sqLiteDatabase.query(
+        cursor = sqLiteDatabase.query(
                 TABLE_NAME,
                 TAB_NAME,
                 WHERE,
@@ -60,8 +72,5 @@ public class Tab5 extends Fragment {
 
         cursor.moveToFirst();
         switches = cursor.getBlob(cursor.getColumnIndex(FingeringDatabase.BOX_5_COLUMN));
-
-        dbHelper.close();
-        cursor.close();
     }
 }

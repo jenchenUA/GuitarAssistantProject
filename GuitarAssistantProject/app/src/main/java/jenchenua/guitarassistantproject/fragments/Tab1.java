@@ -15,6 +15,10 @@ import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 
 public class Tab1 extends Fragment {
+    private DBHelper dbHelper;
+    private SQLiteDatabase sqLiteDatabase;
+    private Cursor cursor;
+
     private static final String[] TAB_NAME = {FingeringDatabase.BOX_1_COLUMN};
 
     private String fingeringName;
@@ -33,6 +37,14 @@ public class Tab1 extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        cursor.close();
+        sqLiteDatabase.close();
+        dbHelper.close();
+    }
+
     private void draw(View rootView) {
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_1);
 
@@ -42,14 +54,14 @@ public class Tab1 extends Fragment {
     }
 
     private void getSwitchesFromDB() {
-        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
-        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        dbHelper = new DBHelper(getActivity().getApplicationContext());
+        sqLiteDatabase = dbHelper.getReadableDatabase();
 
         fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
         final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
         final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
 
-        Cursor cursor = sqLiteDatabase.query(
+        cursor = sqLiteDatabase.query(
                 TABLE_NAME,
                 TAB_NAME,
                 WHERE,
