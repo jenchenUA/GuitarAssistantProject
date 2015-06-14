@@ -75,6 +75,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
 
     private void getScaleListFromDB() {
         dbHelper = new DBHelper(getActivity().getApplicationContext());
+        dbHelper.setForcedUpgrade();
         sqLiteDatabase = dbHelper.getReadableDatabase();
 
         cursor = sqLiteDatabase.query(

@@ -7,6 +7,7 @@ import android.support.v7.widget.Toolbar;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 
+import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.utils.Utilities;
 
 
