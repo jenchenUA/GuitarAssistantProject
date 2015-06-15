@@ -11,6 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +24,9 @@ import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.ScaleEntry;
 
 public class ScaleFragment extends android.support.v4.app.Fragment {
+    private GoogleAnalytics googleAnalytics;
+    private Tracker tracker;
+
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
     private Cursor cursor;
@@ -33,6 +40,10 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_scale, container, false);
+
+        googleAnalytics = GoogleAnalytics.getInstance(getActivity().getApplicationContext());
+        tracker = googleAnalytics.newTracker("UA-64134224-1");
+        tracker.setScreenName("Scale");
 
         getScaleListFromDB();
 
@@ -63,6 +74,13 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String fingeringName = mScaleAdapter.getItem(position);
+
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("UX")
+                        .setAction("Click")
+                        .setLabel(fingeringName)
+                        .build()
+                );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
