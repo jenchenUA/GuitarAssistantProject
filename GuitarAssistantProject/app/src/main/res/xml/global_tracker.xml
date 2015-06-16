@@ -10,8 +10,14 @@
 
     <!-- The dispatching period in seconds when Google Play services is
         unavailable. The default period is 1800 seconds or 30 minutes -->
-    <integer name="ga_dispatchPeriod">1200</integer>
+    <integer name="ga_dispatchPeriod">900</integer>
 
     <!-- Enable dry run mode. Default is false -->
     <bool name="ga_dryRun">false</bool>
+
+    <!-- Enable Uncaught Exception Measurement.-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
+
+    <!-- Enable Session Management. -->
+    <integer name="ga_sessionTimeout">300</integer>
 </resources>

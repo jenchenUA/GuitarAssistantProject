@@ -21,10 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
+import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.PentatonicEntry;
-import jenchenua.guitarassistantproject.utils.GuitarAssistantAnalytics;
 
 public class PentatonicFragment extends Fragment {
     private static final String LOG_TAG = PentatonicFragment.class.getSimpleName();
@@ -46,7 +46,7 @@ public class PentatonicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pentatonic, container, false);
 
-        tracker = new GuitarAssistantAnalytics(getActivity().getApplicationContext()).tracker();
+        tracker = MainActivity.getTracker();
 
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);

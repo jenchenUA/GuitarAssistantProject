@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
-import jenchenua.guitarassistantproject.utils.GuitarAssistantAnalytics;
 
 public class Tab5 extends Fragment {
     private static final String LOG_TAG = Tab5.class.getSimpleName();
@@ -40,7 +40,7 @@ public class Tab5 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_5, container, false);
 
-        tracker = new GuitarAssistantAnalytics(getActivity().getApplicationContext()).tracker();
+        tracker = DetailActivity.getTracker();
 
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);

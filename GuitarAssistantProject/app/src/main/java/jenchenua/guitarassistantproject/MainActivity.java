@@ -1,22 +1,21 @@
 package jenchenua.guitarassistantproject;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 
+import jenchenua.guitarassistantproject.utils.AnalyticsActivity;
 import jenchenua.guitarassistantproject.utils.Utilities;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AnalyticsActivity {
     private final static String LOG_TAG = "MainActivity";
 
     private Drawer.Result drawerResult = null;
     private AccountHeader.Result headerResult = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
