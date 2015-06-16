@@ -6,12 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +24,13 @@ import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.PentatonicEntry;
+import jenchenua.guitarassistantproject.utils.GuitarAssistantAnalytics;
 
 public class PentatonicFragment extends Fragment {
     private static final String LOG_TAG = PentatonicFragment.class.getSimpleName();
+    private static final String SCREEN_NAME = "Pentatonic";
+
+    private Tracker tracker;
 
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
@@ -38,11 +46,22 @@ public class PentatonicFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pentatonic, container, false);
 
+        tracker = new GuitarAssistantAnalytics(getActivity().getApplicationContext()).tracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
+
         getPentatonicListFromDB();
 
         createListView(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -67,6 +86,13 @@ public class PentatonicFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String fingeringName = mPentatonicAdapter.getItem(position);
+
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Click")
+                        .setLabel(fingeringName)
+                        .build()
+                );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("tableName", PentatonicEntry.TABLE_NAME);

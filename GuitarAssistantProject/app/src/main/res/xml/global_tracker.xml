@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <resources>
+    <string name="ga_trackingId">UA-64134224-1</string>
+
     <!-- The application name. Defaults to name specified for the application label -->
     <string name="ga_appName">Guitar Assistant</string>
 
@@ -8,8 +10,8 @@
 
     <!-- The dispatching period in seconds when Google Play services is
         unavailable. The default period is 1800 seconds or 30 minutes -->
-    <integer name="ga_dispatchPeriod">30</integer>
+    <integer name="ga_dispatchPeriod">1200</integer>
 
     <!-- Enable dry run mode. Default is false -->
-    <bool name="ga_dryRun">false</bool>
+    <bool name="ga_dryRun">true</bool>
 </resources>

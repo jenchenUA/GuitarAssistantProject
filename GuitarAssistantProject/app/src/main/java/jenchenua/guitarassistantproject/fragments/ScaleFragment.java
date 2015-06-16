@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -22,9 +22,12 @@ import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.ScaleEntry;
+import jenchenua.guitarassistantproject.utils.GuitarAssistantAnalytics;
 
 public class ScaleFragment extends android.support.v4.app.Fragment {
-    private GoogleAnalytics googleAnalytics;
+    private static final String LOG_TAG = ScaleFragment.class.getSimpleName();
+    private static final String SCREEN_NAME = "Scale";
+
     private Tracker tracker;
 
     private DBHelper dbHelper;
@@ -41,15 +44,23 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_scale, container, false);
 
-        googleAnalytics = GoogleAnalytics.getInstance(getActivity().getApplicationContext());
-        tracker = googleAnalytics.newTracker("UA-64134224-1");
-        tracker.setScreenName("Scale");
+        tracker = new GuitarAssistantAnalytics(getActivity().getApplicationContext()).tracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
 
         getScaleListFromDB();
 
         createListView(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -76,7 +87,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
                 String fingeringName = mScaleAdapter.getItem(position);
 
                 tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("UX")
+                        .setCategory("Action")
                         .setAction("Click")
                         .setLabel(fingeringName)
                         .build()

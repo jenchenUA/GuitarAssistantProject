@@ -4,16 +4,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
 
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
+import jenchenua.guitarassistantproject.utils.GuitarAssistantAnalytics;
 
 public class Tab5 extends Fragment {
+    private static final String LOG_TAG = Tab5.class.getSimpleName();
+    private static final String SCREEN_NAME = "Tab_5";
+
+    private Tracker tracker;
+
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
     private Cursor cursor;
@@ -30,10 +40,21 @@ public class Tab5 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_5, container, false);
 
+        tracker = new GuitarAssistantAnalytics(getActivity().getApplicationContext()).tracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
+
         getSwitchesFromDB();
         draw(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
