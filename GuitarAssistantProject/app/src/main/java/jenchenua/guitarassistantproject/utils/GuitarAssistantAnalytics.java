@@ -23,8 +23,8 @@ public class GuitarAssistantAnalytics {
         if (tracker == null) {
             analytics = GoogleAnalytics.getInstance(context);
             analytics.getLogger().setLogLevel(Logger.LogLevel.VERBOSE);
-            analytics.setDryRun(true);
-            analytics.setLocalDispatchPeriod(5);
+            analytics.setDryRun(false);
+            analytics.setLocalDispatchPeriod(1200);
 
             tracker = analytics.newTracker(R.xml.global_tracker);
             tracker.enableExceptionReporting(true);
