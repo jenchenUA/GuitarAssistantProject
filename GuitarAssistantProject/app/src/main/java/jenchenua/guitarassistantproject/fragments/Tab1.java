@@ -20,7 +20,7 @@ import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab1 extends Fragment {
     private static final String LOG_TAG = Tab1.class.getSimpleName();
-    private static final String SCREEN_NAME = "Tab_1";
+    private static final String SCREEN_NAME = "Box 1: ";
 
     private Tracker tracker;
 
@@ -40,10 +40,12 @@ public class Tab1 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_1, container, false);
 
+        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
+
         tracker = DetailActivity.getTracker();
 
-        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
-        tracker.setScreenName(SCREEN_NAME);
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME + " - " + fingeringName);
+        tracker.setScreenName(SCREEN_NAME + ": " + fingeringName);
 
         getSwitchesFromDB();
         draw(rootView);
@@ -77,7 +79,6 @@ public class Tab1 extends Fragment {
         dbHelper = new DBHelper(getActivity().getApplicationContext());
         sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
         final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
         final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
 
