@@ -55,11 +55,11 @@ public class FingeringDrawing extends View {
     }
 
     private float[] getCoordinatesDotsX(float startFretX, float stopFretX, float stepX){
-        float[] coordinates = new float[5];
+        float[] coordinates = new float[switches[0]];
 
         float distanceToCentreFret = (startFretX + stepX - stopFretX) / 2;
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < switches[0]; i++) {
             if (i == 0)
                 coordinates[i] = stopFretX + distanceToCentreFret;
             else if (i == 1)
@@ -92,7 +92,7 @@ public class FingeringDrawing extends View {
     }
 
     private float getStepX(float startStringPointX, float stopStringPointX) {
-        return (stopStringPointX - startStringPointX) / 5;
+        return (stopStringPointX - startStringPointX) / switches[0];
     }
 
     private float getPercentWidth(float percent) {
@@ -170,8 +170,8 @@ public class FingeringDrawing extends View {
 
         Log.i(LOG_TAG, "Drawing frets.");
 
-        int i = 1;
-        while (i++ <= 6) {
+        int i = 0;
+        while (i++ <= switches[0]) {
             canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, gridColor);
 
             startFretPointX += stepX;
@@ -194,9 +194,9 @@ public class FingeringDrawing extends View {
     }
 
     private void drawDotsOnString(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
-        int k = 0;
+        int k = 1;
         for (int i = 0; i <= 5; i++) {
-            for (int j = 0; j <= 4; j++, k++) {
+            for (int j = 0; j < switches[0]; j++, k++) {
                 if (switches[k] == 1 || switches[k] == 2)
                     if (switches[k] == 2) {
                         canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor2);
