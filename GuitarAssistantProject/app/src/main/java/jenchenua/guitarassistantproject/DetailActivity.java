@@ -30,6 +30,7 @@ public class DetailActivity extends AnalyticsActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getIntent().getStringExtra("fingeringName"));
         setSupportActionBar(toolbar);
 
         try {
