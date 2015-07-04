@@ -24,11 +24,11 @@ import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
-import jenchenua.guitarassistantproject.database.FingeringDatabase.PentatonicEntry;
+import jenchenua.guitarassistantproject.database.FingeringDatabase.ChordsEntry;
 
-public class PentatonicFragment extends Fragment {
-    private static final String LOG_TAG = PentatonicFragment.class.getSimpleName();
-    private static final String SCREEN_NAME = "Pentatonic";
+public class ChordFragment extends Fragment {
+    private static final String LOG_TAG = ChordFragment.class.getSimpleName();
+    private static final String SCREEN_NAME = "Chords";
 
     private Tracker tracker;
 
@@ -36,11 +36,11 @@ public class PentatonicFragment extends Fragment {
     private SQLiteDatabase sqLiteDatabase;
     private Cursor cursor;
 
-    public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {PentatonicEntry.NAME_COLUMN};
+    public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {ChordsEntry.NAME_COLUMN};
 
     private ArrayAdapter<String> mPentatonicAdapter;
 
-    private List<String> pentatonicList;
+    private List<String> chordsList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class PentatonicFragment extends Fragment {
                 getActivity(),
                 R.layout.fragment_list_item,
                 R.id.card_view_textView,
-                pentatonicList);
+                chordsList);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView_pentatonic);
         listView.setAdapter(mPentatonicAdapter);
@@ -95,7 +95,8 @@ public class PentatonicFragment extends Fragment {
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("tableName", PentatonicEntry.TABLE_NAME);
+                intent.putExtra("className", LOG_TAG);
+                intent.putExtra("tableName", ChordsEntry.TABLE_NAME);
                 intent.putExtra("fingeringName", fingeringName);
 
                 startActivity(intent);
@@ -108,7 +109,7 @@ public class PentatonicFragment extends Fragment {
         sqLiteDatabase = dbHelper.getReadableDatabase();
 
         cursor = sqLiteDatabase.query(
-                PentatonicEntry.TABLE_NAME,
+                ChordsEntry.TABLE_NAME,
                 LIST_NAME_COLUMN_FOR_SQL_QUERY,
                 null,
                 null,
@@ -117,12 +118,12 @@ public class PentatonicFragment extends Fragment {
                 null
         );
 
-        pentatonicList = new ArrayList<>();
+        chordsList = new ArrayList<>();
 
         cursor.moveToFirst();
 
         do {
-            pentatonicList.add(cursor.getString(cursor.getColumnIndex(PentatonicEntry.NAME_COLUMN)));
+            chordsList.add(cursor.getString(cursor.getColumnIndex(ChordsEntry.NAME_COLUMN)));
         } while (cursor.moveToNext());
     }
 }

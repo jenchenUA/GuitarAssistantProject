@@ -71,6 +71,7 @@ public class Tab5 extends Fragment {
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_5);
 
         fingering.setSwitches(switches);
+        fingering.setClassName(getActivity().getIntent().getStringExtra("className"));
 
         fingering.invalidate();
     }

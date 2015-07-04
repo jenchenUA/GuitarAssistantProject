@@ -17,8 +17,8 @@ public class FingeringDatabase {
         public static final String NAME_COLUMN = "name";
     }
 
-    public static class PentatonicEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Pentatonic";
+    public static class ChordsEntry implements BaseColumns {
+        public static final String TABLE_NAME = "Chords";
 
         public static final String NAME_COLUMN = "name";
     }

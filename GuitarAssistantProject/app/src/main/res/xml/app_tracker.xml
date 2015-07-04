@@ -23,7 +23,7 @@
         AnalyticsGuitarAssistant PatternScreen
     </screenName>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.PentatonicFragment">
+    <screenName name="jenchenua.guitarassistantproject.fragments.ChordFragment">
         AnalyticsGuitarAssistant PentatonicScreen
     </screenName>
 

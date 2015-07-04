@@ -48,6 +48,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
 
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);
+
         getScaleListFromDB();
 
         createListView(rootView);
@@ -93,6 +94,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("className", LOG_TAG);
                 intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
                 intent.putExtra("fingeringName", fingeringName);
 

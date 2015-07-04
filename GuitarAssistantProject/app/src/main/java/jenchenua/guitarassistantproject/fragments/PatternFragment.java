@@ -97,7 +97,8 @@ public class PatternFragment extends Fragment {
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("tableName", FingeringDatabase.PentatonicEntry.TABLE_NAME);
+                intent.putExtra("className", LOG_TAG);
+                intent.putExtra("tableName", FingeringDatabase.ChordsEntry.TABLE_NAME);
                 intent.putExtra("fingeringName", fingeringName);
 
                 startActivity(intent);

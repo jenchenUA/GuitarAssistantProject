@@ -10,4 +10,5 @@
     <color name="gridColor">#BDBDBD</color>
     <color name="dotsColor">#00BFA5</color>
     <color name="tonicDotsColor">#FFD600</color>
+    <color name="crossColor">#000000</color>
 </resources>

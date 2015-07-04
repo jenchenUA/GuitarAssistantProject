@@ -4,19 +4,27 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
 import jenchenua.guitarassistantproject.R;
+import jenchenua.guitarassistantproject.fragments.ChordFragment;
+import jenchenua.guitarassistantproject.fragments.PatternFragment;
+import jenchenua.guitarassistantproject.fragments.ScaleFragment;
 
 public class FingeringDrawing extends View {
 
     private static final String LOG_TAG = FingeringDrawing.class.getSimpleName();
 
+    private Typeface typeface;
+
     private Paint gridColor = null;
     private Paint dotsColor = null;
-    private Paint tonicDotsColor2 = null;
+    private Paint tonicDotsColor = null;
+    private Paint textColor = null;
+    private Paint crossColor = null;
 
     private int width;
     private int height;
@@ -24,6 +32,8 @@ public class FingeringDrawing extends View {
     private int orientation;
 
     private byte[] switches;
+
+    private String className;
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -44,14 +54,28 @@ public class FingeringDrawing extends View {
         dotsColor = new Paint();
         dotsColor.setColor(getResources().getColor(R.color.dotsColor));
 
-        tonicDotsColor2 = new Paint();
-        tonicDotsColor2.setColor(getResources().getColor(R.color.tonicDotsColor));
+        tonicDotsColor = new Paint();
+        tonicDotsColor.setColor(getResources().getColor(R.color.tonicDotsColor));
+
+        typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Roboto-MediumItalic.ttf");
+        textColor = new Paint();
+        textColor.setColor(getResources().getColor(R.color.colorTextColor));
+        textColor.setTypeface(typeface);
+        textColor.setTextSize(getPercentHeight(4F));
+
+        crossColor = new Paint();
+        crossColor.setColor(getResources().getColor(R.color.crossColor));
+        crossColor.setStrokeWidth(getPercentWidth(1F));
         
         drawFingering(canvas);
     }
 
     public void setSwitches(byte[] switches) {
         this.switches = switches;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     private float[] getCoordinatesDotsX(float startFretX, float stopFretX, float stepX){
@@ -106,9 +130,6 @@ public class FingeringDrawing extends View {
     }
 
     private void drawFingering(Canvas canvas) {
-
-        Log.i(LOG_TAG, "Drawing fingering.");
-
         float startStringPointX = getPercentWidth(5F);
         float stopStringPointX = getPercentWidth(93.5F);
         float startFretPointX = getPercentWidth(5F);
@@ -147,12 +168,11 @@ public class FingeringDrawing extends View {
         stopFretPointY = drawStrings(canvas, startStringPointX, stopStringPointX, startStringPointY, stopStingPointY, stepY);
         drawFrets(canvas, startFretPointX, stopFretPointX, startFretPointY, stopFretPointY, stepX);
         drawDots(canvas, coordinatesDotsX, coordinatesDotsY);
+
+        Log.i(LOG_TAG, "Drawing fingering finished.");
     }
 
     private float drawStrings(Canvas canvas, float startStringPointX, float stopStringPointX, float startStringPointY, float stopStingPointY, float stepY) {
-
-        Log.i(LOG_TAG, "Drawing strings.");
-
         int i = 1;
         while (i++ <= 6) {
             canvas.drawRect(startStringPointX, startStringPointY, stopStringPointX, stopStingPointY, gridColor);
@@ -163,13 +183,12 @@ public class FingeringDrawing extends View {
             }
         }
 
+        Log.i(LOG_TAG, "Drawing strings finished.");
+
         return stopStingPointY;
     }
 
     private void drawFrets(Canvas canvas, float startFretPointX, float stopFretPointX, float startFretPointY, float stopFretPointY, float stepX) {
-
-        Log.i(LOG_TAG, "Drawing frets.");
-
         int i = 0;
         while (i++ <= switches[0]) {
             canvas.drawRect(startFretPointX, startFretPointY, stopFretPointX, stopFretPointY, gridColor);
@@ -177,12 +196,11 @@ public class FingeringDrawing extends View {
             startFretPointX += stepX;
             stopFretPointX += stepX;
         }
+
+        Log.i(LOG_TAG, "Drawing frets finished.");
     }
 
     private void drawDots(Canvas canvas, float[] coordinatesX, float[] coordinatesY) {
-
-        Log.i(LOG_TAG, "Drawing dots.");
-
         float radius;
         if (orientation == Configuration.ORIENTATION_PORTRAIT) {
             radius = getPercentWidth(4F);
@@ -190,19 +208,60 @@ public class FingeringDrawing extends View {
             radius = getPercentWidth(2.5F);
         }
 
-        drawDotsOnString(canvas, coordinatesX, coordinatesY, radius);
+        if (className.equals(ScaleFragment.class.getSimpleName())) {
+            drawScales(canvas, coordinatesX, coordinatesY, radius);
+        }
+
+        if (className.equals(ChordFragment.class.getSimpleName())) {
+            drawChords(canvas, coordinatesX, coordinatesY, radius);
+        }
+
+        if (className.equals(PatternFragment.class.getSimpleName())) {
+            drawScales(canvas, coordinatesX, coordinatesY, radius);
+        }
+
+        Log.i(LOG_TAG, "Drawing dots finished.");
     }
 
-    private void drawDotsOnString(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
+    private void drawScales(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
         int k = 1;
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j < switches[0]; j++, k++) {
-                if (switches[k] == 1 || switches[k] == 2)
-                    if (switches[k] == 2) {
-                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor2);
-                    } else {
+                if (switches[k] != 0) {
+                    if (switches[k] == 2)
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+                    else
                         canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                }
+            }
+        }
+    }
+
+    private void drawChords(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
+        float crossRadius = radius / 2;
+
+        if (switches[1] == 0) {
+            canvas.drawText(switches[1] + " fr", getPercentWidth(5F), getPercentHeight(47.5F), textColor);
+        } else {
+            textColor.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(switches[1] + " fr", coordinatesX[0], getPercentHeight(47.5F), textColor);
+        }
+
+        int k = 2;
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j < switches[0]; j++, k++) {
+                if (switches[k] != 0) {
+                    if (switches[k] == 2)
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+                    else if (switches[k] == 3) {
+                        canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] - crossRadius,
+                                coordinatesX[j] + crossRadius, coordinatesY[i] + crossRadius, crossColor);
+                        canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] + crossRadius,
+                                coordinatesX[j] + crossRadius, coordinatesY[i] - crossRadius, crossColor);
                     }
+                    else
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                }
             }
         }
     }
