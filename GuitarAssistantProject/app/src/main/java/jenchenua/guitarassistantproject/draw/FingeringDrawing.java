@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.util.Date;
+
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.fragments.ChordFragment;
 import jenchenua.guitarassistantproject.fragments.PatternFragment;
@@ -25,6 +27,7 @@ public class FingeringDrawing extends View {
     private Paint tonicDotsColor = null;
     private Paint textColor = null;
     private Paint crossColor = null;
+    private Paint fingerNumberColor = null;
 
     private int width;
     private int height;
@@ -66,6 +69,11 @@ public class FingeringDrawing extends View {
         crossColor = new Paint();
         crossColor.setColor(getResources().getColor(R.color.crossColor));
         crossColor.setStrokeWidth(getPercentWidth(1F));
+
+        fingerNumberColor = new Paint();
+        fingerNumberColor.setColor(getResources().getColor(R.color.fingerNumberColor));
+        fingerNumberColor.setTypeface(typeface);
+        fingerNumberColor.setTextAlign(Paint.Align.CENTER);
         
         drawFingering(canvas);
     }
@@ -240,6 +248,8 @@ public class FingeringDrawing extends View {
     private void drawChords(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
         float crossRadius = radius / 2;
 
+        fingerNumberColor.setTextSize(radius * 1.5F);
+
         if (switches[1] == 0) {
             canvas.drawText(switches[1] + " fr", getPercentWidth(5F), getPercentHeight(47.5F), textColor);
         } else {
@@ -250,17 +260,41 @@ public class FingeringDrawing extends View {
         int k = 2;
         for (int i = 0; i <= 5; i++) {
             for (int j = 0; j < switches[0]; j++, k++) {
-                if (switches[k] != 0) {
-                    if (switches[k] == 2)
-                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
-                    else if (switches[k] == 3) {
-                        canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] - crossRadius,
-                                coordinatesX[j] + crossRadius, coordinatesY[i] + crossRadius, crossColor);
-                        canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] + crossRadius,
-                                coordinatesX[j] + crossRadius, coordinatesY[i] - crossRadius, crossColor);
-                    }
-                    else
+                float y = coordinatesY[i] + (radius / 2);
+
+                if (switches[k] == 1 || switches[k] == 5) {
+                    if (switches[k] == 1)
                         canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    else
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+
+                    canvas.drawText("1", coordinatesX[j], y, fingerNumberColor);
+                } else if (switches[k] == 2 || switches[k] == 6) {
+                    if (switches[k] == 2)
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    else
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+
+                    canvas.drawText("2", coordinatesX[j], y, fingerNumberColor);
+                } else if (switches[k] == 3 || switches[k] == 7) {
+                    if (switches[k] == 3)
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    else
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+
+                    canvas.drawText("3", coordinatesX[j], y, fingerNumberColor);
+                } else if (switches[k] == 4 || switches[k] == 8) {
+                    if (switches[k] == 4)
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    else
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor);
+
+                    canvas.drawText("4", coordinatesX[j], y, fingerNumberColor);
+                } else if (switches[k] == 9) {
+                    canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] - crossRadius,
+                            coordinatesX[j] + crossRadius, coordinatesY[i] + crossRadius, crossColor);
+                    canvas.drawLine(coordinatesX[j] - crossRadius, coordinatesY[i] + crossRadius,
+                            coordinatesX[j] + crossRadius, coordinatesY[i] - crossRadius, crossColor);
                 }
             }
         }
