@@ -1,8 +1,5 @@
 package jenchenua.guitarassistantproject.fragments;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,7 +12,7 @@ import com.google.android.gms.analytics.Tracker;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.DBHelper;
+import jenchenua.guitarassistantproject.asynctasks.TabsAsyncTask;
 import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
@@ -25,17 +22,11 @@ public class Tab1 extends Fragment {
 
     private Tracker tracker = null;
 
-    private static final String[] TAB_NAME = {FingeringDatabase.BOX_1_COLUMN};
-
     private String fingeringName = null;
-
-    private FingeringDrawing fingering = null;
 
     private byte[] switches = null;
 
-    private View rootView = null;
-
-    private SQLiteAsyncTask drawAsyncTask = null;
+    private TabsAsyncTask tabsAsyncTask = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,16 +34,20 @@ public class Tab1 extends Fragment {
 
         fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
 
-        drawAsyncTask = new SQLiteAsyncTask();
-        drawAsyncTask.execute();
+        final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
+        final String COLUMN_NAME = FingeringDatabase.BOX_1_COLUMN;
+        final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
+
+        tabsAsyncTask = new TabsAsyncTask(getActivity().getApplicationContext());
+        tabsAsyncTask.execute(LOG_TAG, SCREEN_NAME, TABLE_NAME, COLUMN_NAME, WHERE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.tab_1, container, false);
+        View rootView = inflater.inflate(R.layout.tab_1, container, false);
 
         try {
-            switches = drawAsyncTask.get();
+            switches = tabsAsyncTask.get();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -70,62 +65,16 @@ public class Tab1 extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void draw(View rootView) {
-        fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_1);
+        FingeringDrawing fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_1);
 
         fingering.setSwitches(switches);
         fingering.setClassName(getActivity().getIntent().getStringExtra("className"));
 
         fingering.invalidate();
-    }
-
-    private class SQLiteAsyncTask extends AsyncTask<Void, Void, byte[]> {
-        private DBHelper dbHelper;
-        private SQLiteDatabase sqLiteDatabase;
-        private Cursor cursor;
-
-        private byte[] switches;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            dbHelper = new DBHelper(getActivity().getApplicationContext());
-            sqLiteDatabase = dbHelper.getReadableDatabase();
-        }
-
-        @Override
-        protected byte[] doInBackground(Void... params) {
-            Log.i(LOG_TAG, SCREEN_NAME + ": AsyncTask started.");
-
-            final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
-            final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
-
-            cursor = sqLiteDatabase.query(
-                    TABLE_NAME,
-                    TAB_NAME,
-                    WHERE,
-                    null,
-                    null,
-                    null,
-                    null
-            );
-
-            cursor.moveToFirst();
-            switches = cursor.getBlob(cursor.getColumnIndex(FingeringDatabase.BOX_1_COLUMN));
-
-            return switches;
-        }
-
-        @Override
-        protected void onPostExecute(byte[] bytes) {
-            super.onPostExecute(bytes);
-
-            cursor.close();
-            sqLiteDatabase.close();
-            dbHelper.close();
-        }
     }
 }

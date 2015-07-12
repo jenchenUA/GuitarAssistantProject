@@ -1,9 +1,6 @@
 package jenchenua.guitarassistantproject.fragments;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,30 +13,36 @@ import android.widget.ListView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.DBHelper;
+import jenchenua.guitarassistantproject.asynctasks.MainActivityAsyncTask;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.ScaleEntry;
 
 public class ScaleFragment extends android.support.v4.app.Fragment {
     private static final String LOG_TAG = ScaleFragment.class.getSimpleName();
     private static final String SCREEN_NAME = "Scale";
 
-    private Tracker tracker;
+    private Tracker tracker = null;
 
-    private DBHelper dbHelper;
-    private SQLiteDatabase sqLiteDatabase;
-    private Cursor cursor;
+    private ArrayAdapter<String> mScaleAdapter = null;
 
-    public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {ScaleEntry.NAME_COLUMN};
+    private MainActivityAsyncTask mainActivityAsyncTask = null;
 
-    private ArrayAdapter<String> mScaleAdapter;
+    private List<String> scaleList = null;
 
-    private List<String> scaleList;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final String TABLE_NAME = ScaleEntry.TABLE_NAME;
+        final String COLUMN_NAME = ScaleEntry.NAME_COLUMN;
+
+        mainActivityAsyncTask = new MainActivityAsyncTask(getActivity().getApplicationContext());
+        mainActivityAsyncTask.execute(LOG_TAG, SCREEN_NAME, TABLE_NAME, COLUMN_NAME);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +53,11 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);
 
-        getScaleListFromDB();
+        try {
+            scaleList = mainActivityAsyncTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         createListView(rootView);
 
@@ -64,17 +71,8 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        cursor.close();
-        sqLiteDatabase.close();
-        dbHelper.close();
-    }
-
     private void createListView(View rootView) {
-        mScaleAdapter = new ArrayAdapter<String>(
+        mScaleAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
                 R.id.card_view_textView,
@@ -88,10 +86,10 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
                 String fingeringName = mScaleAdapter.getItem(position);
 
                 tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Click")
-                        .setLabel(fingeringName)
-                        .build()
+                                .setCategory("Action")
+                                .setAction("Click")
+                                .setLabel(fingeringName)
+                                .build()
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
@@ -102,29 +100,5 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
                 startActivity(intent);
             }
         });
-    }
-
-    private void getScaleListFromDB() {
-        dbHelper = new DBHelper(getActivity().getApplicationContext());
-        dbHelper.setForcedUpgrade();
-        sqLiteDatabase = dbHelper.getReadableDatabase();
-
-        cursor = sqLiteDatabase.query(
-                ScaleEntry.TABLE_NAME,
-                LIST_NAME_COLUMN_FOR_SQL_QUERY,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        scaleList = new ArrayList<>();
-
-        cursor.moveToFirst();
-
-        do {
-            scaleList.add(cursor.getString(cursor.getColumnIndex(ScaleEntry.NAME_COLUMN)));
-        } while (cursor.moveToNext());
     }
 }

@@ -10,7 +10,6 @@ import jenchenua.guitarassistantproject.tabs.SlidingTabLayout;
 import jenchenua.guitarassistantproject.utils.AnalyticsActivity;
 import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
 
-
 public class DetailActivity extends AnalyticsActivity {
 
     private Toolbar toolbar = null;

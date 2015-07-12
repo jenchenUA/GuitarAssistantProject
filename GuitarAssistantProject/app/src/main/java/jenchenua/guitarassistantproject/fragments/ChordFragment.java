@@ -1,9 +1,6 @@
 package jenchenua.guitarassistantproject.fragments;
 
-
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,30 +14,36 @@ import android.widget.ListView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.DBHelper;
+import jenchenua.guitarassistantproject.asynctasks.MainActivityAsyncTask;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.ChordsEntry;
 
 public class ChordFragment extends Fragment {
     private static final String LOG_TAG = ChordFragment.class.getSimpleName();
     private static final String SCREEN_NAME = "Chords";
 
-    private Tracker tracker;
+    private Tracker tracker = null;
 
-    private DBHelper dbHelper;
-    private SQLiteDatabase sqLiteDatabase;
-    private Cursor cursor;
+    private ArrayAdapter<String> mPentatonicAdapter = null;
 
-    public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {ChordsEntry.NAME_COLUMN};
+    private List<String> chordsList = null;
 
-    private ArrayAdapter<String> mPentatonicAdapter;
+    private MainActivityAsyncTask mainActivityAsyncTask = null;
 
-    private List<String> chordsList;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final String TABLE_NAME = ChordsEntry.TABLE_NAME;
+        final String COLUMN_NAME = ChordsEntry.NAME_COLUMN;
+
+        mainActivityAsyncTask = new MainActivityAsyncTask(getActivity().getApplicationContext());
+        mainActivityAsyncTask.execute(LOG_TAG, SCREEN_NAME, TABLE_NAME, COLUMN_NAME);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,7 +54,11 @@ public class ChordFragment extends Fragment {
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);
 
-        getPentatonicListFromDB();
+        try {
+            chordsList = mainActivityAsyncTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         createListView(rootView);
 
@@ -61,20 +68,12 @@ public class ChordFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        cursor.close();
-        sqLiteDatabase.close();
-        dbHelper.close();
-    }
-
     private void createListView(View rootView) {
-        mPentatonicAdapter = new ArrayAdapter<String>(
+        mPentatonicAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
                 R.id.card_view_textView,
@@ -88,10 +87,10 @@ public class ChordFragment extends Fragment {
                 String fingeringName = mPentatonicAdapter.getItem(position);
 
                 tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Click")
-                        .setLabel(fingeringName)
-                        .build()
+                                .setCategory("Action")
+                                .setAction("Click")
+                                .setLabel(fingeringName)
+                                .build()
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
@@ -102,28 +101,5 @@ public class ChordFragment extends Fragment {
                 startActivity(intent);
             }
         });
-    }
-
-    private void getPentatonicListFromDB() {
-        dbHelper = new DBHelper(getActivity().getApplicationContext());
-        sqLiteDatabase = dbHelper.getReadableDatabase();
-
-        cursor = sqLiteDatabase.query(
-                ChordsEntry.TABLE_NAME,
-                LIST_NAME_COLUMN_FOR_SQL_QUERY,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        chordsList = new ArrayList<>();
-
-        cursor.moveToFirst();
-
-        do {
-            chordsList.add(cursor.getString(cursor.getColumnIndex(ChordsEntry.NAME_COLUMN)));
-        } while (cursor.moveToNext());
     }
 }

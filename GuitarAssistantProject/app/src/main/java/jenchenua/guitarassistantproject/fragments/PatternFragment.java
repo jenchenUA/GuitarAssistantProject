@@ -1,9 +1,6 @@
 package jenchenua.guitarassistantproject.fragments;
 
-
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,14 +14,12 @@ import android.widget.ListView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.database.DBHelper;
-import jenchenua.guitarassistantproject.database.FingeringDatabase;
+import jenchenua.guitarassistantproject.asynctasks.MainActivityAsyncTask;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.PatternEntry;
 
 
@@ -32,17 +27,24 @@ public class PatternFragment extends Fragment {
     private static final String LOG_TAG = PatternFragment.class.getSimpleName();
     private static final String SCREEN_NAME = "Pattern";
 
-    private Tracker tracker;
+    private Tracker tracker = null;
 
-    private DBHelper dbHelper;
-    private SQLiteDatabase sqLiteDatabase;
-    private Cursor cursor;
+    private ArrayAdapter<String> mPatternAdapter = null;
 
-    public static final String[] LIST_NAME_COLUMN_FOR_SQL_QUERY = {PatternEntry.NAME_COLUMN};
+    private List<String> patternList = null;
 
-    private ArrayAdapter<String> mPatternAdapter;
+    private MainActivityAsyncTask mainActivityAsyncTask = null;
 
-    private List<String> patternList;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        final String TABLE_NAME = PatternEntry.TABLE_NAME;
+        final String COLUMN_NAME = PatternEntry.NAME_COLUMN;
+
+        mainActivityAsyncTask = new MainActivityAsyncTask(getActivity().getApplicationContext());
+        mainActivityAsyncTask.execute(LOG_TAG, SCREEN_NAME, TABLE_NAME, COLUMN_NAME);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +55,11 @@ public class PatternFragment extends Fragment {
         Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
         tracker.setScreenName(SCREEN_NAME);
 
-        getPatternListFromDB();
+        try {
+            patternList = mainActivityAsyncTask.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         createListView(rootView);
 
@@ -63,20 +69,12 @@ public class PatternFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        cursor.close();
-        sqLiteDatabase.close();
-        dbHelper.close();
-    }
-
     private void createListView(View rootView) {
-        mPatternAdapter = new ArrayAdapter<String>(
+        mPatternAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
                 R.id.card_view_textView,
@@ -90,42 +88,19 @@ public class PatternFragment extends Fragment {
                 String fingeringName = mPatternAdapter.getItem(position);
 
                 tracker.send(new HitBuilders.EventBuilder()
-                        .setCategory("Action")
-                        .setAction("Click")
-                        .setLabel(fingeringName)
-                        .build()
+                                .setCategory("Action")
+                                .setAction("Click")
+                                .setLabel(fingeringName)
+                                .build()
                 );
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("className", LOG_TAG);
-                intent.putExtra("tableName", FingeringDatabase.ChordsEntry.TABLE_NAME);
+                intent.putExtra("tableName", PatternEntry.TABLE_NAME);
                 intent.putExtra("fingeringName", fingeringName);
 
                 startActivity(intent);
             }
         });
-    }
-
-    private void getPatternListFromDB() {
-        dbHelper = new DBHelper(getActivity().getApplicationContext());
-        sqLiteDatabase = dbHelper.getReadableDatabase();
-
-        cursor = sqLiteDatabase.query(
-                PatternEntry.TABLE_NAME,
-                LIST_NAME_COLUMN_FOR_SQL_QUERY,
-                null,
-                null,
-                null,
-                null,
-                null
-        );
-
-        patternList = new ArrayList<>();
-
-        cursor.moveToFirst();
-
-        do {
-            patternList.add(cursor.getString(cursor.getColumnIndex(PatternEntry.NAME_COLUMN)));
-        } while (cursor.moveToNext());
     }
 }

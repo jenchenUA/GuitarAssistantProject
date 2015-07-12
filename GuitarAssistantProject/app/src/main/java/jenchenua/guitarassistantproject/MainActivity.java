@@ -9,8 +9,6 @@ import com.mikepenz.materialdrawer.accountswitcher.AccountHeader;
 import jenchenua.guitarassistantproject.utils.AnalyticsActivity;
 import jenchenua.guitarassistantproject.utils.Utilities;
 
-
-
 public class MainActivity extends AnalyticsActivity {
     private final static String LOG_TAG = "MainActivity";
 
