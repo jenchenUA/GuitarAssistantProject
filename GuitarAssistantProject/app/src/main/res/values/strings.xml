@@ -6,6 +6,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <string name="chords_key_select">Select key:</string>
+
     <string name="primary_drawer_item_scales">Scales</string>
     <string name="primary_drawer_item_chords">Chords</string>
     <string name="primary_drawer_item_patterns">Patterns</string>
