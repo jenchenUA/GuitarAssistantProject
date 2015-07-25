@@ -1,6 +1,8 @@
 package jenchenua.guitarassistantproject.fragments;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,67 +17,62 @@ import android.widget.Spinner;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
-import jenchenua.guitarassistantproject.asynctasks.MainActivityAsyncTask;
-import jenchenua.guitarassistantproject.database.FingeringDatabase.ChordsEntry;
+import jenchenua.guitarassistantproject.database.DBHelper;
+import jenchenua.guitarassistantproject.database.FingeringDatabase;
+import jenchenua.guitarassistantproject.database.FingeringDatabase.AEntry;
+import jenchenua.guitarassistantproject.database.FingeringDatabase.BEntry;
 
 public class ChordFragment extends Fragment {
     private static final String LOG_TAG = ChordFragment.class.getSimpleName();
     private static final String SCREEN_NAME = "Chords";
 
-    private CharSequence[] keys = {"Chords", "Pattern"};
+    private final String COLUMN_NAME = FingeringDatabase.NAME_COLUMN;
+    private String tableName = null;
+
+    private String[] keys = {
+            AEntry.TABLE_NAME,
+            BEntry.TABLE_NAME
+    };
 
     private Tracker tracker = null;
 
     private ArrayAdapter<String> mChordsAdapter = null;
+    private ArrayAdapter<String> spinnerAdapter = null;
 
     private List<String> chordsList = null;
-
-    private MainActivityAsyncTask mainActivityAsyncTask = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_chords, container, false);
 
+        tracking();
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listView_chords);
         Spinner spinner = (Spinner) rootView.findViewById(R.id.chords_spinner);
-        ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(
+
+        spinnerAdapter = new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
                 keys
         );
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        spinner.setAdapter(spinnerAdapter);
+        mChordsAdapter = new ArrayAdapter<>(
+                getActivity(),
+                R.layout.fragment_list_item,
+                R.id.card_view_textView);
 
-        String tableName = spinner.getSelectedItem().toString();
-        final String COLUMN_NAME = ChordsEntry.NAME_COLUMN;
+        createSpinner(spinner);
 
-        mainActivityAsyncTask = new MainActivityAsyncTask(getActivity().getApplicationContext());
-        mainActivityAsyncTask.execute(LOG_TAG, SCREEN_NAME, tableName, COLUMN_NAME);
-
-        tracker = MainActivity.getTracker();
-
-        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
-        tracker.setScreenName(SCREEN_NAME);
+        createListView(listView);
 
         return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        try {
-            chordsList = mainActivityAsyncTask.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        createListView();
     }
 
     @Override
@@ -85,14 +82,7 @@ public class ChordFragment extends Fragment {
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
-    private void createListView() {
-        mChordsAdapter = new ArrayAdapter<>(
-                getActivity(),
-                R.layout.fragment_list_item,
-                R.id.card_view_textView,
-                chordsList);
-
-        ListView listView = (ListView) getActivity().findViewById(R.id.listView_chords);
+    private void createListView(ListView listView) {
         listView.setAdapter(mChordsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,11 +98,72 @@ public class ChordFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("className", LOG_TAG);
-                intent.putExtra("tableName", ChordsEntry.TABLE_NAME);
+                intent.putExtra("tableName", tableName);
                 intent.putExtra("fingeringName", fingeringName);
 
                 startActivity(intent);
             }
         });
+    }
+
+    private void createSpinner(Spinner spinner) {
+        spinner.setAdapter(spinnerAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                tableName = parent.getSelectedItem().toString();
+
+                chordsList = getChrodsListFromDB(tableName, COLUMN_NAME);
+
+                mChordsAdapter.clear();
+                mChordsAdapter.addAll(chordsList);
+                mChordsAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private List<String> getChrodsListFromDB(String tableName, String column) {
+        DBHelper dbHelper = new DBHelper(getActivity().getApplicationContext());
+        dbHelper.setForcedUpgrade();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+
+        String[] columns = {column};
+
+        Cursor cursor = sqLiteDatabase.query(
+                tableName,
+                columns,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+
+        List<String> chordsList = new ArrayList<>();
+
+        do {
+            chordsList.add(cursor.getString(cursor.getColumnIndex(column)));
+        } while (cursor.moveToNext());
+
+        cursor.close();
+        sqLiteDatabase.close();
+        dbHelper.close();
+
+        return chordsList;
+    }
+
+    private void tracking() {
+        tracker = MainActivity.getTracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
     }
 }

@@ -17,15 +17,15 @@ public class FingeringDatabase {
         public static final String NAME_COLUMN = "name";
     }
 
-    public static class ChordsEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Chords";
-
-        public static final String NAME_COLUMN = "name";
-    }
-
     public static class PatternEntry implements BaseColumns {
         public static final String TABLE_NAME = "Pattern";
+    }
 
-        public static final String NAME_COLUMN = "name";
+    public static class AEntry implements BaseColumns {
+        public static final String TABLE_NAME = "A";
+    }
+
+    public static class BEntry implements BaseColumns {
+        public static final String TABLE_NAME = "B";
     }
 }

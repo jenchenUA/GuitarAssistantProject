@@ -20,6 +20,7 @@ import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.asynctasks.MainActivityAsyncTask;
+import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.database.FingeringDatabase.PatternEntry;
 
 
@@ -40,7 +41,7 @@ public class PatternFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         final String TABLE_NAME = PatternEntry.TABLE_NAME;
-        final String COLUMN_NAME = PatternEntry.NAME_COLUMN;
+        final String COLUMN_NAME = FingeringDatabase.NAME_COLUMN;
 
         mainActivityAsyncTask = new MainActivityAsyncTask(getActivity().getApplicationContext());
         mainActivityAsyncTask.execute(LOG_TAG, SCREEN_NAME, TABLE_NAME, COLUMN_NAME);
@@ -50,10 +51,7 @@ public class PatternFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pattern, container, false);
 
-        tracker = MainActivity.getTracker();
-
-        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
-        tracker.setScreenName(SCREEN_NAME);
+        tracking();
 
         try {
             patternList = mainActivityAsyncTask.get();
@@ -102,5 +100,12 @@ public class PatternFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    private void tracking() {
+        tracker = MainActivity.getTracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
     }
 }
