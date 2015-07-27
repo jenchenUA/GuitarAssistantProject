@@ -10,20 +10,24 @@
         android:text="@string/chords_key_select"
         android:id="@+id/select_key_textView"
         android:layout_marginStart="@dimen/activity_vertical_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"/>
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:layout_marginTop="10dp"/>
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:minHeight="@dimen/abc_action_bar_default_height_material"
+        android:minHeight="@dimen/abc_action_button_min_height_material"
         android:id="@+id/chords_spinner"
         android:layout_below="@+id/select_key_textView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        style="@style/spinner_style"/>
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView_chords"
-        android:layout_below="@+id/chords_spinner"/>
+        android:layout_below="@+id/chords_spinner"
+        android:divider="@color/dividerColor"
+        android:dividerHeight="1dp"/>
 </RelativeLayout>

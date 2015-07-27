@@ -12,4 +12,8 @@
     <color name="tonicDotsColor">#FFD600</color>
     <color name="crossColor">#000000</color>
     <color name="fingerNumberColor">#FFFFFF</color>
+
+    <color name="dividerColor">#00BFA5</color>
+
+    <color name="spinnerBackgroundDropDownColor">#FFFFFF</color>
 </resources>
