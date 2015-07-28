@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#00796B</color>
     <color name="colorWindowBackground">#FFFFFF</color>
 
+    <color name="toolbarTextColor">#FFFFFF</color>
     <color name="colorTextColor">#000000</color>
     <color name="tabsScrollColor">#FFFFFF</color>
 
@@ -13,7 +14,9 @@
     <color name="crossColor">#000000</color>
     <color name="fingerNumberColor">#FFFFFF</color>
 
-    <color name="dividerColor">#00BFA5</color>
+    <color name="dividerColor">#BDBDBD</color>
 
     <color name="spinnerBackgroundDropDownColor">#FFFFFF</color>
+
+    <color name="chordsListViewBackgroundColor">#FFFFFF</color>
 </resources>

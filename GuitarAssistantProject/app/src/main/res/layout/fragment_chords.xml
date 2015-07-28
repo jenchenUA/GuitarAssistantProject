@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,7 +15,7 @@
         android:layout_marginTop="10dp"/>
 
     <Spinner
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/abc_action_button_min_height_material"
         android:id="@+id/chords_spinner"
@@ -23,11 +24,20 @@
         android:layout_alignParentStart="true"
         style="@style/spinner_style"/>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listView_chords"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_below="@+id/chords_spinner"
-        android:divider="@color/dividerColor"
-        android:dividerHeight="1dp"/>
+        android:background="@color/colorPrimary">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView_chords"
+            android:divider="@color/dividerColor"
+            android:dividerHeight="1dp"
+            android:layout_margin="2.5dp"
+            android:background="@color/background_material_light"/>
+    </RelativeLayout>
+
 </RelativeLayout>

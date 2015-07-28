@@ -75,8 +75,8 @@ public class PatternFragment extends Fragment {
         mPatternAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
-                R.id.card_view_textView,
-                patternList);
+                R.id.listView_item_textView);
+        mPatternAdapter.addAll(patternList);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView_pattern);
         listView.setAdapter(mPatternAdapter);

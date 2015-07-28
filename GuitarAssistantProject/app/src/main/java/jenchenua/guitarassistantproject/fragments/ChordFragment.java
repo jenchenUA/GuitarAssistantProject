@@ -66,7 +66,7 @@ public class ChordFragment extends Fragment {
         mChordsAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
-                R.id.card_view_textView);
+                R.id.listView_item_textView);
 
         createSpinner(spinner);
 

@@ -73,7 +73,7 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
         mScaleAdapter = new ArrayAdapter<>(
                 getActivity(),
                 R.layout.fragment_list_item,
-                R.id.card_view_textView,
+                R.id.listView_item_textView,
                 scaleList);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listView_scale);
