@@ -7,12 +7,12 @@
     <include android:id="@+id/toolbar"
         layout="@layout/toolbar"/>
     
-    <jenchenua.guitarassistantproject.tabs.SlidingTabLayout
+    <jenchenua.guitarassistantapp.tabs.SlidingTabLayout
         android:id="@+id/detail_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
-    </jenchenua.guitarassistantproject.tabs.SlidingTabLayout>
+    </jenchenua.guitarassistantapp.tabs.SlidingTabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/detail_pager"

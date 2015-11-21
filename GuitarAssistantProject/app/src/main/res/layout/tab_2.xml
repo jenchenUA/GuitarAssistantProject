@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <jenchenua.guitarassistantproject.draw.FingeringDrawing
+    <jenchenua.guitarassistantapp.draw.FingeringDrawing
         android:id="@+id/fingering_drawing_tab_2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
