@@ -16,13 +16,14 @@ public class FingeringDrawing extends View {
 
     private Paint gridColor = null;
     private Paint dotsColor = null;
+    private Paint tonicDotsColor2 = null;
 
     private int width;
     private int height;
 
     private int orientation;
 
-    private boolean[] switches;
+    private byte[] switches;
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -42,11 +43,14 @@ public class FingeringDrawing extends View {
 
         dotsColor = new Paint();
         dotsColor.setColor(getResources().getColor(R.color.dotsColor));
+
+        tonicDotsColor2 = new Paint();
+        tonicDotsColor2.setColor(getResources().getColor(R.color.tonicDotsColor));
         
         drawFingering(canvas);
     }
 
-    public void setSwitches(boolean[] switches) {
+    public void setSwitches(byte[] switches) {
         this.switches = switches;
     }
 
@@ -186,144 +190,20 @@ public class FingeringDrawing extends View {
             radius = getPercentWidth(2.5F);
         }
 
-        float string1 = coordinatesY[0];
-        float string2 = coordinatesY[1];
-        float string3 = coordinatesY[2];
-        float string4 = coordinatesY[3];
-        float string5 = coordinatesY[4];
-        float string6 = coordinatesY[5];
-
-        drawDotsOnString6(canvas, coordinatesX, string6, radius);
-        drawDotsOnString5(canvas, coordinatesX, string5, radius);
-        drawDotsOnString4(canvas, coordinatesX, string4, radius);
-        drawDotsOnString3(canvas, coordinatesX, string3, radius);
-        drawDotsOnString2(canvas, coordinatesX, string2, radius);
-        drawDotsOnString1(canvas, coordinatesX, string1, radius);
+        drawDotsOnString(canvas, coordinatesX, coordinatesY, radius);
     }
 
-    private void drawDotsOnString1(Canvas canvas, float[] coordinatesX, float string1, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the first string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[25])
-            canvas.drawCircle(fret1, string1, radius, dotsColor);
-        if (switches[26])
-            canvas.drawCircle(fret2, string1, radius, dotsColor);
-        if (switches[27])
-            canvas.drawCircle(fret3, string1, radius, dotsColor);
-        if (switches[28])
-            canvas.drawCircle(fret4, string1, radius, dotsColor);
-        if (switches[29])
-            canvas.drawCircle(fret5, string1, radius, dotsColor);
-    }
-
-    private void drawDotsOnString2(Canvas canvas, float[] coordinatesX, float string2, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the second string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[20])
-            canvas.drawCircle(fret1, string2, radius, dotsColor);
-        if (switches[21])
-            canvas.drawCircle(fret2, string2, radius, dotsColor);
-        if (switches[22])
-            canvas.drawCircle(fret3, string2, radius, dotsColor);
-        if (switches[23])
-            canvas.drawCircle(fret4, string2, radius, dotsColor);
-        if (switches[24])
-            canvas.drawCircle(fret5, string2, radius, dotsColor);
-    }
-
-    private void drawDotsOnString3(Canvas canvas, float[] coordinatesX, float string3, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the third string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[15])
-            canvas.drawCircle(fret1, string3, radius, dotsColor);
-        if (switches[16])
-            canvas.drawCircle(fret2, string3, radius, dotsColor);
-        if (switches[17])
-            canvas.drawCircle(fret3, string3, radius, dotsColor);
-        if (switches[18])
-            canvas.drawCircle(fret4, string3, radius, dotsColor);
-        if (switches[19])
-            canvas.drawCircle(fret5, string3, radius, dotsColor);
-    }
-
-    private void drawDotsOnString4(Canvas canvas, float[] coordinatesX, float string4, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the fourth string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[10])
-            canvas.drawCircle(fret1, string4, radius, dotsColor);
-        if (switches[11])
-            canvas.drawCircle(fret2, string4, radius, dotsColor);
-        if (switches[12])
-            canvas.drawCircle(fret3, string4, radius, dotsColor);
-        if (switches[13])
-            canvas.drawCircle(fret4, string4, radius, dotsColor);
-        if (switches[14])
-            canvas.drawCircle(fret5, string4, radius, dotsColor);
-    }
-
-    private void drawDotsOnString5(Canvas canvas, float[] coordinatesX, float string5, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the fifth string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[5])
-            canvas.drawCircle(fret1, string5, radius, dotsColor);
-        if (switches[6])
-            canvas.drawCircle(fret2, string5, radius, dotsColor);
-        if (switches[7])
-            canvas.drawCircle(fret3, string5, radius, dotsColor);
-        if (switches[8])
-            canvas.drawCircle(fret4, string5, radius, dotsColor);
-        if (switches[9])
-            canvas.drawCircle(fret5, string5, radius, dotsColor);
-    }
-
-    private void drawDotsOnString6(Canvas canvas, float[] coordinatesX, float string6, float radius) {
-        Log.i(LOG_TAG, "Drawing dots on the sixth string.");
-
-        float fret1 = coordinatesX[0];
-        float fret2 = coordinatesX[1];
-        float fret3 = coordinatesX[2];
-        float fret4 = coordinatesX[3];
-        float fret5 = coordinatesX[4];
-
-        if (switches[0])
-            canvas.drawCircle(fret1, string6, radius, dotsColor);
-        if (switches[1])
-            canvas.drawCircle(fret2, string6, radius, dotsColor);
-        if (switches[2])
-            canvas.drawCircle(fret3, string6, radius, dotsColor);
-        if (switches[3])
-            canvas.drawCircle(fret4, string6, radius, dotsColor);
-        if (switches[4])
-            canvas.drawCircle(fret5, string6, radius, dotsColor);
+    private void drawDotsOnString(Canvas canvas, float[] coordinatesX, float[] coordinatesY, float radius) {
+        int k = 0;
+        for (int i = 0; i <= 5; i++) {
+            for (int j = 0; j <= 4; j++, k++) {
+                if (switches[k] == 1 || switches[k] == 2)
+                    if (switches[k] == 2) {
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, tonicDotsColor2);
+                    } else {
+                        canvas.drawCircle(coordinatesX[j], coordinatesY[i], radius, dotsColor);
+                    }
+            }
+        }
     }
 }

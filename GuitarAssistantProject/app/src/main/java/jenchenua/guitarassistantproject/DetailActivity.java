@@ -12,18 +12,22 @@ import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
 
 
 public class DetailActivity extends AppCompatActivity {
-    // Declaring Your View and Variables
-    Toolbar toolbar = null;
-    ViewPager pager = null;
-    ViewPagerAdapter adapter = null;
-    SlidingTabLayout tabs = null;
-    CharSequence Titles[]={"Position 1", "Position 2", "Position 3", "Position 4", "Position 5"};
-    final int numbOfTabs = 5;
+
+    private Toolbar toolbar = null;
+
+    private ViewPager pager = null;
+    private ViewPagerAdapter adapter = null;
+    private SlidingTabLayout tabs = null;
+
+    private CharSequence[] titles;
+
+    private static final int NUMB_OF_TABS = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -35,8 +39,15 @@ public class DetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        titles = new CharSequence[] {
+                getResources().getString(R.string.tab_1),
+                getResources().getString(R.string.tab_2),
+                getResources().getString(R.string.tab_3),
+                getResources().getString(R.string.tab_4),
+                getResources().getString(R.string.tab_5)
+        };
         // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
-        adapter =  new ViewPagerAdapter(getSupportFragmentManager(), Titles, numbOfTabs);
+        adapter = new ViewPagerAdapter(getSupportFragmentManager(), titles, NUMB_OF_TABS);
 
         // Assigning ViewPager View and setting the adapter
         pager = (ViewPager) findViewById(R.id.detail_pager);
