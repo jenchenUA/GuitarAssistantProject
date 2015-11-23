@@ -1,50 +1,34 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
-    <!-- Percentage of events to include in reports -->
-    <string name="ga_sampleFrequency">100.0</string>
-
-    <!-- catch and report uncaught exceptions from the app -->
-    <bool name="ga_reportUncaughtExceptions">true</bool>
-
-    <!-- How long a session exists before giving up -->
-    <integer name="ga_sessionTimeout">-1</integer>
+    <!-- End current session if app sleeps for a period of time -->
+    <integer name="ga_sessionTimeout">300</integer>
 
     <!-- Enable automatic Activity measurement -->
     <bool name="ga_autoActivityTracking">true</bool>
 
-    <!-- The screen names that will appear in reports -->
-    <screenName name="jenchenua.guitarassistantproject.fragments.ScaleFragment">
-        AnalyticsGuitarAssistant ScaleScreen
-    </screenName>
+    <!--  The property id associated with this analytics tracker -->
+    <string name="ga_trackingId">UA-64134224-1</string>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.PatternFragment">
-        AnalyticsGuitarAssistant PatternScreen
-    </screenName>
+    <!--
+      See Project Structure -> Analytics -> Google Analytics -> Learn More
+      to learn more about configuring this file.
+    -->
+    <!-- The application name. Defaults to name specified for the application label -->
+    <string name="ga_appName">Guitar Assistant</string>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.ChordFragment">
-        AnalyticsGuitarAssistant PentatonicScreen
-    </screenName>
+    <!-- The application version. Defaults to android:versionName specified in the AndroidManifest.xml -->
+    <string name="ga_appVersion">0.6</string>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.Tab1">
-        AnalyticsGuitarAssistant Tab_1Screen
-    </screenName>
+    <!-- The dispatching period in seconds when Google Play services is
+        unavailable. The default period is 1800 seconds or 30 minutes -->
+    <integer name="ga_dispatchPeriod">900</integer>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.Tab2">
-        AnalyticsGuitarAssistant Tab_2Screen
-    </screenName>
+    <!-- Enable dry run mode. Default is false -->
+    <bool name="ga_dryRun">false</bool>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.Tab3">
-        AnalyticsGuitarAssistant Tab_3Screen
-    </screenName>
+    <!-- Enable Uncaught Exception Measurement.-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
 
-    <screenName name="jenchenua.guitarassistantproject.fragments.Tab4">
-        AnalyticsGuitarAssistant Tab_4Screen
-    </screenName>
-
-    <screenName name="jenchenua.guitarassistantproject.fragments.Tab5">
-        AnalyticsGuitarAssistant Tab_5Screen
-    </screenName>
+    <!-- Enable Session Management. -->
+    <integer name="ga_sessionTimeout">300</integer>
 </resources>
-
