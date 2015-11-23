@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +14,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import jenchenua.guitarassistantproject.DetailActivity;
+import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase;
@@ -24,6 +29,11 @@ import jenchenua.guitarassistantproject.database.FingeringDatabase.PatternEntry;
 
 
 public class PatternFragment extends Fragment {
+    private static final String LOG_TAG = PatternFragment.class.getSimpleName();
+    private static final String SCREEN_NAME = "Pattern";
+
+    private Tracker tracker;
+
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
     private Cursor cursor;
@@ -38,11 +48,22 @@ public class PatternFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_pattern, container, false);
 
+        tracker = MainActivity.getTracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME);
+        tracker.setScreenName(SCREEN_NAME);
+
         getPatternListFromDB();
 
         createListView(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -68,8 +89,16 @@ public class PatternFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String fingeringName = mPatternAdapter.getItem(position);
 
+                tracker.send(new HitBuilders.EventBuilder()
+                        .setCategory("Action")
+                        .setAction("Click")
+                        .setLabel(fingeringName)
+                        .build()
+                );
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("tableName", FingeringDatabase.PentatonicEntry.TABLE_NAME);
+                intent.putExtra("className", LOG_TAG);
+                intent.putExtra("tableName", FingeringDatabase.ChordsEntry.TABLE_NAME);
                 intent.putExtra("fingeringName", fingeringName);
 
                 startActivity(intent);

@@ -3,15 +3,15 @@ package jenchenua.guitarassistantproject;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import jenchenua.guitarassistantproject.tabs.SlidingTabLayout;
+import jenchenua.guitarassistantproject.utils.AnalyticsActivity;
 import jenchenua.guitarassistantproject.utils.ViewPagerAdapter;
 
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends AnalyticsActivity {
 
     private Toolbar toolbar = null;
 
@@ -30,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
 
         // Creating The Toolbar and setting it as the Toolbar for the activity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(getIntent().getStringExtra("fingeringName"));
         setSupportActionBar(toolbar);
 
         try {

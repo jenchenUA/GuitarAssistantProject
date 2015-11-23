@@ -1,21 +1,13 @@
 package jenchenua.guitarassistantproject.utils;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.Drawer;
@@ -25,18 +17,16 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import java.util.List;
-
 import jenchenua.guitarassistantproject.BuildConfig;
-import jenchenua.guitarassistantproject.MainActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.fragments.PatternFragment;
-import jenchenua.guitarassistantproject.fragments.PentatonicFragment;
+import jenchenua.guitarassistantproject.fragments.ChordFragment;
 import jenchenua.guitarassistantproject.fragments.ScaleFragment;
 
 public class Utilities {
+    private static final String LOG_TAG = Utilities.class.getSimpleName();
     private static final String version = "Version: " + BuildConfig.VERSION_NAME + '.' + BuildConfig.VERSION_CODE;
-    private static final String LOG_TAG = "Utilities";
+
 
     public static void hideSoftKeyboard(Activity activity) {
         try {
@@ -59,38 +49,30 @@ public class Utilities {
                 if (drawerItem != null) {
                     switch (drawerItem.getIdentifier()) {
                         case 1:
-                            Log.i(LOG_TAG, "Click on Scale");
+                            Log.i(LOG_TAG, "Click on Scales");
                             activity.getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fragment_container, new ScaleFragment())
                                     .commit();
                             break;
                         case 2:
-                            Log.i(LOG_TAG, "Click on Pattern");
+                            Log.i(LOG_TAG, "Click on Chords");
+                            activity.getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .replace(R.id.fragment_container, new ChordFragment())
+                                    .commit();
+                            break;
+
+                        case 3:
+                            Log.i(LOG_TAG, "Click on Patterns");
                             activity.getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fragment_container, new PatternFragment())
                                     .commit();
                             break;
-                        case 3:
-                            Log.i(LOG_TAG, "Click on Pentatonic");
-                            activity.getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .replace(R.id.fragment_container, new PentatonicFragment())
-                                    .commit();
-                            break;
                         case 4:
                             Log.i(LOG_TAG, "Click on Version");
                             Toast.makeText(activity.getApplicationContext(), version, Toast.LENGTH_SHORT).show();
-                            break;
-                        case 70:
-                            try {
-                                Intent int_rate = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + activity.getApplicationContext().getPackageName()));
-                                int_rate.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                activity.getApplicationContext().startActivity(int_rate);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
                             break;
                     }
                 }
@@ -145,10 +127,10 @@ public class Utilities {
                         .withName(R.string.primary_drawer_item_scales)
                         .withIdentifier(1),
                 new PrimaryDrawerItem()
-                        .withName(R.string.primary_drawer_item_patterns)
+                        .withName(R.string.primary_drawer_item_chords)
                         .withIdentifier(2),
                 new PrimaryDrawerItem()
-                        .withName(R.string.primary_drawer_item_pentatonic)
+                        .withName(R.string.primary_drawer_item_patterns)
                         .withIdentifier(3),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem()

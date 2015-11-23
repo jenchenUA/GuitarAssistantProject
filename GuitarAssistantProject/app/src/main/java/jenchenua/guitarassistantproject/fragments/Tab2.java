@@ -5,16 +5,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
+import jenchenua.guitarassistantproject.DetailActivity;
 import jenchenua.guitarassistantproject.R;
 import jenchenua.guitarassistantproject.database.DBHelper;
 import jenchenua.guitarassistantproject.database.FingeringDatabase;
 import jenchenua.guitarassistantproject.draw.FingeringDrawing;
 
 public class Tab2 extends Fragment {
+    private static final String LOG_TAG = Tab2.class.getSimpleName();
+    private static final String SCREEN_NAME = "Box 2";
+
+    private Tracker tracker;
+
     private DBHelper dbHelper;
     private SQLiteDatabase sqLiteDatabase;
     private Cursor cursor;
@@ -31,10 +41,23 @@ public class Tab2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.tab_2, container, false);
 
+        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
+
+        tracker = DetailActivity.getTracker();
+
+        Log.i(LOG_TAG, "Set screen name: " + SCREEN_NAME + " - " + fingeringName);
+        tracker.setScreenName(SCREEN_NAME + ": " + fingeringName);
+
         getSwitchesFromDB();
         draw(rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
@@ -49,6 +72,7 @@ public class Tab2 extends Fragment {
         fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_2);
 
         fingering.setSwitches(switches);
+        fingering.setClassName(getActivity().getIntent().getStringExtra("className"));
 
         fingering.invalidate();
     }
@@ -57,7 +81,6 @@ public class Tab2 extends Fragment {
         dbHelper = new DBHelper(getActivity().getApplicationContext());
         sqLiteDatabase = dbHelper.getReadableDatabase();
 
-        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
         final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
         final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
 
