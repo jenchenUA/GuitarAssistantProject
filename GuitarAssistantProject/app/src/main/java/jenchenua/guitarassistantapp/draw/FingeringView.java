@@ -9,6 +9,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 
+import jenchenua.guitarassistantapp.draw.interfaces.Fingering;
 import jenchenua.guitarassistantapp.draw.itemsfordrawing.Cross;
 import jenchenua.guitarassistantapp.draw.itemsfordrawing.Dot;
 import jenchenua.guitarassistantapp.draw.itemsfordrawing.Fret;
@@ -71,6 +72,21 @@ public class FingeringView extends View implements Fingering {
 
     @Override
     public void drawCross(Cross cross) {
-        //TODO
+        mPaint.setColor(cross.getColor());
+        mPaint.setStrokeWidth(cross.getStrokeWidth());
+        mCanvas.drawLine(
+                cross.getFisthLineStartX(),
+                cross.getFisthLineStartY(),
+                cross.getFirstLineStopX(),
+                cross.getFirstLineStopY(),
+                mPaint
+        );
+        mCanvas.drawLine(
+                cross.getSecondLineStartX(),
+                cross.getSecondLineStartY(),
+                cross.getSecondLineStopX(),
+                cross.getSecondLineStopY(),
+                mPaint
+        );
     }
 }

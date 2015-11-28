@@ -1,4 +1,4 @@
-package jenchenua.guitarassistantapp.draw;
+package jenchenua.guitarassistantapp.draw.interfaces;
 
 import jenchenua.guitarassistantapp.draw.itemsfordrawing.Cross;
 import jenchenua.guitarassistantapp.draw.itemsfordrawing.Dot;

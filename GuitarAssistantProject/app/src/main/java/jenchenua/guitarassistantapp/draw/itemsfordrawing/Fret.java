@@ -14,6 +14,14 @@ public class Fret {
         this.stopY = stopY;
     }
 
+    public Fret(float startX, float stopX, float startY, float stopY, int color) {
+        this.startX = startX;
+        this.stopX = stopX;
+        this.startY = startY;
+        this.stopY = stopY;
+        this.color = color;
+    }
+
     public float getStartX() {
         return startX;
     }
@@ -30,16 +38,16 @@ public class Fret {
         return stopY;
     }
 
-    public int getColor() {
-        return color;
-    }
-
     public float getWidth() {
         return stopX - startX;
     }
 
     public float getHeight() {
         return stopY - startY;
+    }
+
+    public int getColor() {
+        return color;
     }
 
     public void setColor(int color) {

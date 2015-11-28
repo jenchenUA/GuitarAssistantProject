@@ -12,6 +12,13 @@ public class Dot {
         this.radius = radius;
     }
 
+    public Dot(float x, float y, float radius, int color) {
+        this.x = x;
+        this.y = y;
+        this.radius = radius;
+        this.color = color;
+    }
+
     public float getX() {
         return x;
     }
