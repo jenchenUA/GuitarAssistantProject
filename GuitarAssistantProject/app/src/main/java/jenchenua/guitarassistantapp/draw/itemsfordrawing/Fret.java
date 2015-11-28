@@ -1,45 +1,22 @@
 package jenchenua.guitarassistantapp.draw.itemsfordrawing;
 
-public class Fret {
-    private float startX;
-    private float stopX;
-    private float startY;
-    private float stopY;
+public class Fret extends Rect {
+    private float width;
     private int color;
 
-    public Fret(float startX, float stopX, float startY, float stopY) {
-        this.startX = startX;
-        this.stopX = stopX;
-        this.startY = startY;
-        this.stopY = stopY;
+    public Fret(float startX, float startY, float stopX, float stopY) {
+        super(startX, startY, stopX, stopY);
+        width = stopX - startX;
     }
 
-    public Fret(float startX, float stopX, float startY, float stopY, int color) {
-        this.startX = startX;
-        this.stopX = stopX;
-        this.startY = startY;
-        this.stopY = stopY;
+    public Fret(float startX, float startY, float stopX, float stopY, int color) {
+        super(startX, startY, stopX, stopY);
+        this.width = stopX - startX;
         this.color = color;
     }
 
-    public float getStartX() {
-        return startX;
-    }
-
-    public float getStopX() {
-        return stopX;
-    }
-
-    public float getStartY() {
-        return startY;
-    }
-
-    public float getStopY() {
-        return stopY;
-    }
-
     public float getWidth() {
-        return stopX - startX;
+        return width;
     }
 
     public float getHeight() {

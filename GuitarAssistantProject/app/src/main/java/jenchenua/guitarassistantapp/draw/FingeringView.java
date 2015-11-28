@@ -62,12 +62,25 @@ public class FingeringView extends View implements Fingering {
     @Override
     public void drawFret(Fret fret) {
         mPaint.setColor(fret.getColor());
-        mCanvas.drawRect(fret.getStartX(), fret.getStartY(), fret.getStopX(), fret.getStopY(), mPaint);
+        mCanvas.drawRect(
+                fret.getStartX(),
+                fret.getStartY(),
+                fret.getStopX(),
+                fret.getStopY(),
+                mPaint
+        );
     }
 
     @Override
     public void drawGuitarString(GuitarString string) {
-        //TODO
+        mPaint.setColor(string.getColor());
+        mCanvas.drawRect(
+                string.getStartX(),
+                string.getStartY(),
+                string.getStopX(),
+                string.getStopY(),
+                mPaint
+        );
     }
 
     @Override
