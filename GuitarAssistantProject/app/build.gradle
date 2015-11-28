@@ -2,12 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    signingConfigs {
-        release {
-        }
-    }
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '23.0.2'
     def Properties versionProps = new Properties()
     def versionPropsFile = file('version.properties')
     if (versionPropsFile.exists())

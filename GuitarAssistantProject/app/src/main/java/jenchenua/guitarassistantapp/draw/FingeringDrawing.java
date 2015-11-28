@@ -14,10 +14,7 @@ import jenchenua.guitarassistantapp.fragments.ChordFragment;
 import jenchenua.guitarassistantapp.fragments.ScaleFragment;
 
 public class FingeringDrawing extends View {
-
     private static final String LOG_TAG = FingeringDrawing.class.getSimpleName();
-
-    private Typeface typeface;
 
     private Paint gridColor = null;
     private Paint dotsColor = null;
@@ -25,29 +22,18 @@ public class FingeringDrawing extends View {
     private Paint textColor = null;
     private Paint crossColor = null;
     private Paint fingerNumberColor = null;
-
     private int width;
     private int height;
-
     private int orientation;
-
     private byte[] switches;
-
     private String className;
 
     public FingeringDrawing(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
+        initPaints();
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        orientation = getResources().getConfiguration().orientation;
-
-        width = canvas.getWidth();
-        height = canvas.getHeight();
-
+    private void initPaints() {
         gridColor = new Paint();
         gridColor.setColor(getResources().getColor(R.color.gridColor));
 
@@ -57,7 +43,8 @@ public class FingeringDrawing extends View {
         tonicDotsColor = new Paint();
         tonicDotsColor.setColor(getResources().getColor(R.color.tonicDotsColor));
 
-        typeface = Typeface.createFromAsset(getResources().getAssets(), "fonts/Roboto-MediumItalic.ttf");
+        Typeface typeface = Typeface.createFromAsset(
+                getResources().getAssets(), "fonts/Roboto-MediumItalic.ttf");
         textColor = new Paint();
         textColor.setColor(getResources().getColor(R.color.colorTextColor));
         textColor.setTypeface(typeface);
@@ -71,8 +58,20 @@ public class FingeringDrawing extends View {
         fingerNumberColor.setColor(getResources().getColor(R.color.fingerNumberColor));
         fingerNumberColor.setTypeface(typeface);
         fingerNumberColor.setTextAlign(Paint.Align.CENTER);
-        
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        orientation = getResources().getConfiguration().orientation;
+        getHeightAndWidth(canvas);
         drawFingering(canvas);
+    }
+
+    private void getHeightAndWidth(Canvas canvas) {
+        width = canvas.getWidth();
+        height = canvas.getHeight();
     }
 
     public void setSwitches(byte[] switches) {
