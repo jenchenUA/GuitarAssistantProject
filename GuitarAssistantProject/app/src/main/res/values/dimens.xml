@@ -3,4 +3,6 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="stings_interval">40dp</dimen>
+    <dimen name="stings_width">1dp</dimen>
+    <dimen name="fret_width">13dp</dimen>
 </resources>
