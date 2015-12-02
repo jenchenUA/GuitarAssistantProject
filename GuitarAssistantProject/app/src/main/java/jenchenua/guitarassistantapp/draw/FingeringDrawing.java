@@ -36,12 +36,15 @@ public class FingeringDrawing extends View {
     private void initPaints() {
         gridColor = new Paint();
         gridColor.setColor(getResources().getColor(R.color.gridColor));
+        gridColor.setAntiAlias(true);
 
         dotsColor = new Paint();
         dotsColor.setColor(getResources().getColor(R.color.dotsColor));
+        dotsColor.setAntiAlias(true);
 
         tonicDotsColor = new Paint();
         tonicDotsColor.setColor(getResources().getColor(R.color.tonicDotsColor));
+        tonicDotsColor.setAntiAlias(true);
 
         Typeface typeface = Typeface.createFromAsset(
                 getResources().getAssets(), "fonts/Roboto-MediumItalic.ttf");

@@ -1,23 +1,19 @@
 <resources>
+    <string name="title_main_activity" translatable="true">Guitar Assistant</string>
+
+    <string name="primary_drawer_item_scales">Гами</string>
+    <string name="primary_drawer_item_chords">Аккорди</string>
+    <string name="secondary_drawer_item_version">Версія</string>
+
+    <string name="tab_1" translatable="false">Box 1</string>
+    <string name="tab_2" translatable="false">Box 2</string>
+    <string name="tab_3" translatable="false">Box 3</string>
+    <string name="tab_4" translatable="false">Box 4</string>
+    <string name="tab_5" translatable="false">Box 5</string>
+
+    <string name="chords_key_select">Виберіть тональність:</string>
+    <string name="action_settings">Налаштування</string>
+    <string name="title_detail_activity">Аплікатура</string>
+    
     <string name="app_name">Guitar Assistant</string>
-    <string name="title_activity_scales">Guitar Assistant</string>
-    <string name="title_activity_detail_activity1">Fingering</string>
-
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-
-    <string name="chords_key_select">Select key:</string>
-
-    <string name="primary_drawer_item_scales">Scales</string>
-    <string name="primary_drawer_item_chords">Chords</string>
-    <string name="primary_drawer_item_patterns">Patterns</string>
-    <string name="secondary_drawer_item_version">Version</string>
-    <string name="title_activity_pattern">PatternActivity</string>
-    <string name="title_activity_pentatonic">ChordsActivity</string>
-
-    <string name="tab_1">Box 1</string>
-    <string name="tab_2">Box 2</string>
-    <string name="tab_3">Box 3</string>
-    <string name="tab_4">Box 4</string>
-    <string name="tab_5">Box 5</string>
 </resources>

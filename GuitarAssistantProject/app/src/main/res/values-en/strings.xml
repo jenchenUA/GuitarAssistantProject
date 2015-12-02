@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="chords_key_select">Select key:</string>
+    <string name="primary_drawer_item_chords">Chords</string>
+    <string name="primary_drawer_item_scales">Scales</string>
+    <string name="secondary_drawer_item_version">Version</string>
+    <string name="title_detail_activity">Fingering</string>
+    <string name="app_name" translatable="false">Guitar Assistant</string>
+</resources>
