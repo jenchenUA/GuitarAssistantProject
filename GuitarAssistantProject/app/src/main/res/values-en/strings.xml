@@ -6,5 +6,4 @@
     <string name="primary_drawer_item_scales">Scales</string>
     <string name="secondary_drawer_item_version">Version</string>
     <string name="title_detail_activity">Fingering</string>
-    <string name="app_name" translatable="false">Guitar Assistant</string>
 </resources>

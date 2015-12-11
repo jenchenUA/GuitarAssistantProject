@@ -39,7 +39,7 @@ public class FingeringDrawing extends View {
         gridColor.setAntiAlias(true);
 
         dotsColor = new Paint();
-        dotsColor.setColor(getResources().getColor(R.color.dotsColor));
+        dotsColor.setColor(getResources().getColor(R.color.dotColor));
         dotsColor.setAntiAlias(true);
 
         tonicDotsColor = new Paint();

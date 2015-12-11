@@ -15,5 +15,5 @@
     <string name="action_settings">Налаштування</string>
     <string name="title_detail_activity">Аплікатура</string>
     
-    <string name="app_name">Guitar Assistant</string>
+    <string name="app_name" translatable="false">Guitar Assistant</string>
 </resources>

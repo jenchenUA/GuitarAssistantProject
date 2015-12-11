@@ -5,4 +5,5 @@
     <dimen name="stings_interval">35dp</dimen>
     <dimen name="stings_width">1dp</dimen>
     <dimen name="fret_width">6dp</dimen>
+    <dimen name="dot_radius">14dp</dimen>
 </resources>

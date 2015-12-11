@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Guitar Assistant</string>
     <string name="primary_drawer_item_chords">Аккорди</string>
     <string name="chords_key_select">Виберіть тональність:</string>
     <string name="action_settings">Налаштування</string>
