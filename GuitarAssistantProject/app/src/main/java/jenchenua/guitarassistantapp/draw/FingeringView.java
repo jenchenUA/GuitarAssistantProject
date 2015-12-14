@@ -88,8 +88,8 @@ public class FingeringView extends View implements Fingering {
         mPaint.setColor(cross.getColor());
         mPaint.setStrokeWidth(cross.getStrokeWidth());
         mCanvas.drawLine(
-                cross.getFisthLineStartX(),
-                cross.getFisthLineStartY(),
+                cross.getFirstLineStartX(),
+                cross.getFirstLineStartY(),
                 cross.getFirstLineStopX(),
                 cross.getFirstLineStopY(),
                 mPaint

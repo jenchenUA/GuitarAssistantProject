@@ -25,12 +25,12 @@ public class Cross {
         this.color = color;
     }
 
-    public float getFisthLineStartX() {
+    public float getFirstLineStartX() {
         return x0;
     }
 
     public float getSecondLineStartX() {
-        return x1;
+        return x0;
     }
 
     public float getFirstLineStopX() {
@@ -38,10 +38,10 @@ public class Cross {
     }
 
     public float getSecondLineStopX() {
-        return x0;
+        return x1;
     }
 
-    public float getFisthLineStartY() {
+    public float getFirstLineStartY() {
         return y0;
     }
 
