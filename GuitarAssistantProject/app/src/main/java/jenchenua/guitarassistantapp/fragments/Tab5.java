@@ -44,7 +44,7 @@ public class Tab5 extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.tab_5, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
 
         try {
             switches = tabsAsyncTask.get();
@@ -70,7 +70,7 @@ public class Tab5 extends Fragment {
     }
 
     private void draw(View rootView) {
-        FingeringDrawing fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing_tab_5);
+        FingeringDrawing fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing);
 
         fingering.setSwitches(switches);
         fingering.setClassName(getActivity().getIntent().getStringExtra("className"));
