@@ -4,11 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import jenchenua.guitarassistantapp.fragments.Tab1;
-import jenchenua.guitarassistantapp.fragments.Tab2;
-import jenchenua.guitarassistantapp.fragments.Tab3;
-import jenchenua.guitarassistantapp.fragments.Tab4;
-import jenchenua.guitarassistantapp.fragments.Tab5;
+import jenchenua.guitarassistantapp.database.FingeringDatabase;
+import jenchenua.guitarassistantapp.fragments.TabFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
@@ -21,7 +18,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         this.Titles = mTitles;
         this.NumbOfTabs = mNumbOfTabsumb;
-
     }
 
     //This method return the fragment for the every position in the View Pager
@@ -30,15 +26,15 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0)
-            return new Tab1();
+            return TabFragment.newInstance(FingeringDatabase.BOX_1_COLUMN);
         else if (position == 1)
-            return new Tab2();
+            return TabFragment.newInstance(FingeringDatabase.BOX_2_COLUMN);
         else if (position == 2)
-            return new Tab3();
+            return TabFragment.newInstance(FingeringDatabase.BOX_3_COLUMN);
         else if (position == 3)
-            return new Tab4();
+            return TabFragment.newInstance(FingeringDatabase.BOX_4_COLUMN);
         else
-            return new Tab5();
+            return TabFragment.newInstance(FingeringDatabase.BOX_5_COLUMN);
     }
 
     // This method return the titles for the Tabs in the Tab Strip
