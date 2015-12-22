@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Настройки</string>
+    <string name="chords_key_select">Выберите тональность:</string>
+    <string name="primary_drawer_item_chords">Аккорды</string>
+    <string name="primary_drawer_item_scales">Гаммы</string>
+    <string name="secondary_drawer_item_version">Версия</string>
+    <string name="title_detail_activity">Аппликатура</string>
+</resources>

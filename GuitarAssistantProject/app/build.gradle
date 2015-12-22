@@ -2,12 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    signingConfigs {
-        release {
-        }
-    }
     compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    buildToolsVersion '23.0.2'
     def Properties versionProps = new Properties()
     def versionPropsFile = file('version.properties')
     if (versionPropsFile.exists())
@@ -32,10 +28,10 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
     compile('com.mikepenz.materialdrawer:library:2.8.1@aar') {
         transitive = true
     }
     compile files('sqliteassethelper-2.0.1.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.google.android.gms:play-services-analytics:8.3.0'
 }
