@@ -10,4 +10,5 @@ public interface Fingering {
     void drawFret(Fret fret);
     void drawGuitarString(GuitarString string);
     void drawCross(Cross cross);
+    void redraw();
 }

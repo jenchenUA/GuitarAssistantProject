@@ -11,8 +11,9 @@ import jenchenua.guitarassistantapp.utils.AnalyticsActivity;
 import jenchenua.guitarassistantapp.utils.Utilities;
 
 public class MainActivity extends AnalyticsActivity {
+    public final static String FINGERING_NAME = "Fingering name";
+    public final static String TABLE_NAME = "Table name";
     private final static String LOG_TAG = "MainActivity";
-
     private Drawer.Result drawerResult = null;
 
     @Override
