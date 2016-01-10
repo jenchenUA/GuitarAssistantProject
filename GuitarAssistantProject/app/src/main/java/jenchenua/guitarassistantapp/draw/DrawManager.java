@@ -18,7 +18,7 @@ public class DrawManager {
     private static float sFretInterval;
     private boolean[] mDrawSwitches;
     private boolean[] mRootSwitches;
-    private String[] standardTune = {"E", "B", "G", "D", "A", "E"};
+    private String[] mTune;
     private String[] keys = {"A", "A#/Bb", "B", "C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab"};
     private FingeringView mFingeringView;
     private ArrayList<GuitarString> mGuitarStrings;
@@ -26,9 +26,10 @@ public class DrawManager {
     private ArrayList<Dot> mDots;
     private ArrayList<Cross> mCrosses;
 
-    public DrawManager(FingeringView fingeringView, int width, String formula, String position) {
+    public DrawManager(FingeringView fingeringView, int width, String[] tune, String formula, String position) {
         this.mFingeringView = fingeringView;
         sWidth = width;
+        this.mTune = tune;
         parsePosition(position);
         initGuitarStrings();
         initFrets(sStopFret - sStartFret + 1);
@@ -122,7 +123,7 @@ public class DrawManager {
 
     private void initSwitches(String formula) {
         ArrayList<String[]> strings = new ArrayList<>();
-        for (String key: standardTune) {
+        for (String key: mTune) {
             strings.add(createStringAccordingKey(key));
         }
         String[] fingeringKeys = formula.split(" ");

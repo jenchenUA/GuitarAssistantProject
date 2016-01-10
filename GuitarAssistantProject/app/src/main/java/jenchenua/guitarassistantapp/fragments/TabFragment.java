@@ -19,6 +19,7 @@ public class TabFragment extends Fragment {
     private static final String LOG_TAG = TabFragment.class.getSimpleName();
     private static final String FORMULA_TAG = "Formula";
     private static final String POSITION_TAG = "Position";
+    private static final String[] STANDARD_TUNE = {"E", "B", "G", "D", "A", "E"};
     private static String sScreenName;
     private Tracker tracker;
     private String fingeringName;
@@ -45,6 +46,7 @@ public class TabFragment extends Fragment {
         DrawManager drawManager = new DrawManager(
                 fingeringView,
                 fingeringView.getScreenWidth(),
+                STANDARD_TUNE,
                 formula,
                 position
         );

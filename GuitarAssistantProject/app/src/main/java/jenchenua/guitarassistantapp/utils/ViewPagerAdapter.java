@@ -7,14 +7,13 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import jenchenua.guitarassistantapp.fragments.TabFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
-    private String mTitles[];
     private int mNumbOfTabs;
     private String mFormula;
+    private String[] mTitles;
     private String[] mPositions;
 
     public ViewPagerAdapter(FragmentManager fm, String mTitles[], int mNumbOfTabs, String formula, String positions) {
         super(fm);
-
         this.mTitles = mTitles;
         this.mNumbOfTabs = mNumbOfTabs;
         this.mFormula = formula;
