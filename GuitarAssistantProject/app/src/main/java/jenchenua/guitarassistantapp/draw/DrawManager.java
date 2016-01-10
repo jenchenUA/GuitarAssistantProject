@@ -138,22 +138,14 @@ public class DrawManager {
     }
 
     private boolean[] createDrawSwitches(ArrayList<String[]> strings, String[] fingeringKeys) {
-        String rootKey = fingeringKeys[0];
         boolean[] drawSwitches = new boolean[NUMBER_OF_STRING * (mFrets.size() - 1)];
         int j = 0;
         for (String[] string: strings) {
             for (int i = sStartFret; i <= sStopFret; i++, j++) {
                 for (String key: fingeringKeys) {
-                    if (key.length() > 1) {
-                        if (string[i].contains(key)) {
-                            drawSwitches[j] = true;
-                            break;
-                        }
-                    } else {
-                        if (string[i].equals(key)) {
-                            drawSwitches[j] = true;
-                            break;
-                        }
+                    drawSwitches[j] = isFind(string[i], key);
+                    if (drawSwitches[j]) {
+                        break;
                     }
                 }
             }
@@ -161,23 +153,28 @@ public class DrawManager {
         return drawSwitches;
     }
     
-    private boolean[] createRootNoteSwitches(ArrayList<String[]> strings, String tonicNote) {
-        boolean[] tonicSwitches = new boolean[NUMBER_OF_STRING * (mFrets.size() - 1)];
+    private boolean[] createRootNoteSwitches(ArrayList<String[]> strings, String rootNote) {
+        boolean[] rootSwitches = new boolean[NUMBER_OF_STRING * (mFrets.size() - 1)];
         int j = 0;
         for (String[] string: strings) {
             for (int i = sStartFret; i <= sStopFret; i++, j++) {
-                if (tonicNote.length() > 1) {
-                    if (string[i].contains(tonicNote)) {
-                        tonicSwitches[j] = true;
-                    }
-                } else {
-                    if (string[i].equals(tonicNote)) {
-                        tonicSwitches[j] = true;
-                    }
-                }
+                rootSwitches[j] = isFind(string[i], rootNote);
             }
         }
-        return tonicSwitches;
+        return rootSwitches;
+    }
+
+    private boolean isFind(String stringNote, String keyNote) {
+        if (keyNote.length() > 1) {
+            if (stringNote.contains(keyNote)) {
+                return true;
+            }
+        } else {
+            if (stringNote.equals(keyNote)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private String[] createStringAccordingKey(String key) {
