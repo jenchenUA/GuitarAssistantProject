@@ -18,8 +18,7 @@ import jenchenua.guitarassistantapp.draw.itemsfordrawing.GuitarString;
 public class FingeringView extends View implements Fingering {
     public static final String LOG_TAG = FingeringView.class.getSimpleName();
 
-    private static int sWidth;
-    private static int sHeight;
+    private int sWidth;
     private Paint mPaint;
     private DrawManager mDrawManager;
     private Canvas mCanvas;
@@ -28,29 +27,15 @@ public class FingeringView extends View implements Fingering {
         super(context, attrs);
         initPaint();
         initWidthAndHeight(context);
-        mDrawManager = new DrawManager(this, sWidth, sHeight);
-    }
-
-    private void initWidthAndHeight(Context context) {
-        WindowManager windowManager = (WindowManager)
-                context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        sWidth = point.x;
-        sHeight = point.y;
-    }
-
-    private void initPaint() {
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         this.mCanvas = canvas;
-        mDrawManager.onDraw();
+        if (mDrawManager != null) {
+            mDrawManager.onDraw();
+        }
     }
 
     @Override
@@ -101,5 +86,32 @@ public class FingeringView extends View implements Fingering {
                 cross.getSecondLineStopY(),
                 mPaint
         );
+    }
+
+    @Override
+    public void redraw() {
+        invalidate();
+    }
+
+    public int getScreenWidth() {
+        return sWidth;
+    }
+
+    public void setDrawManager(DrawManager drawManager) {
+        mDrawManager = drawManager;
+    }
+
+    private void initPaint() {
+        mPaint = new Paint();
+        mPaint.setAntiAlias(true);
+    }
+
+    private void initWidthAndHeight(Context context) {
+        WindowManager windowManager = (WindowManager)
+                context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = windowManager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        sWidth = point.x;
     }
 }

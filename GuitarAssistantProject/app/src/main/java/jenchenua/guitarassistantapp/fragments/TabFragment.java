@@ -10,25 +10,26 @@ import android.view.ViewGroup;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
-import jenchenua.guitarassistantapp.activity.DetailActivity;
 import jenchenua.guitarassistantapp.R;
-import jenchenua.guitarassistantapp.asynctasks.TabsAsyncTask;
-import jenchenua.guitarassistantapp.database.FingeringDatabase;
-import jenchenua.guitarassistantapp.draw.FingeringDrawing;
+import jenchenua.guitarassistantapp.activity.DetailActivity;
+import jenchenua.guitarassistantapp.draw.DrawManager;
+import jenchenua.guitarassistantapp.draw.FingeringView;
 
 public class TabFragment extends Fragment {
     private static final String LOG_TAG = TabFragment.class.getSimpleName();
-    private static final String COLUMN_NAME_TAG = "columnName";
+    private static final String FORMULA_TAG = "Formula";
+    private static final String POSITION_TAG = "Position";
+    private static final String[] STANDARD_TUNE = {"E", "B", "G", "D", "A", "E"};
     private static String sScreenName;
-    private TabsAsyncTask tabsAsyncTask = null;
-    private Tracker tracker = null;
-    private String fingeringName = null;
-    private byte[] switches = null;
+    private Tracker tracker;
+    private String fingeringName;
 
-    public static TabFragment newInstance(String columnName) {
+    public static TabFragment newInstance(String columnName, String formula, String position) {
         TabFragment tab = new TabFragment();
+
         Bundle args = new Bundle();
-        args.putString(COLUMN_NAME_TAG, columnName);
+        args.putString(FORMULA_TAG, formula);
+        args.putString(POSITION_TAG, position);
         tab.setArguments(args);
         sScreenName = columnName;
 
@@ -36,32 +37,21 @@ public class TabFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        fingeringName = getActivity().getIntent().getStringExtra("fingeringName");
-
-        final String TABLE_NAME = getActivity().getIntent().getStringExtra("tableName");
-        final String COLUMN_NAME = getArguments().getString(COLUMN_NAME_TAG);
-        final String WHERE = FingeringDatabase.NAME_COLUMN + " = " + "\"" + fingeringName + "\"";
-
-        tabsAsyncTask = new TabsAsyncTask(getActivity().getApplicationContext());
-        tabsAsyncTask.execute(LOG_TAG, sScreenName, TABLE_NAME, COLUMN_NAME, WHERE);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tab, container, false);
-        try {
-            switches = tabsAsyncTask.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        tracker = DetailActivity.getTracker();
 
-        Log.i(LOG_TAG, "Set screen name: " + sScreenName + " - " + fingeringName);
-        tracker.setScreenName(sScreenName + ": " + fingeringName);
-
-        draw(rootView);
+        String formula = getArguments().getString(FORMULA_TAG);
+        String position = getArguments().getString(POSITION_TAG);
+        FingeringView fingeringView = (FingeringView) rootView.findViewById(R.id.fingering_view);
+        DrawManager drawManager = new DrawManager(
+                fingeringView,
+                fingeringView.getScreenWidth(),
+                STANDARD_TUNE,
+                formula,
+                position
+        );
+        fingeringView.setDrawManager(drawManager);
+        fingeringView.redraw();
 
         return rootView;
     }
@@ -70,13 +60,9 @@ public class TabFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
+        tracker = DetailActivity.getTracker();
+        Log.i(LOG_TAG, "Set screen name: " + sScreenName + " - " + fingeringName);
+        tracker.setScreenName(fingeringName + ": " + sScreenName);
         tracker.send(new HitBuilders.ScreenViewBuilder().build());
-    }
-
-    private void draw(View rootView) {
-        FingeringDrawing fingering = (FingeringDrawing) rootView.findViewById(R.id.fingering_drawing);
-        fingering.setSwitches(switches);
-        fingering.setClassName(getActivity().getIntent().getStringExtra("className"));
-        fingering.invalidate();
     }
 }

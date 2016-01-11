@@ -4,6 +4,8 @@ import android.provider.BaseColumns;
 
 public class FingeringDatabase {
     public static final String NAME_COLUMN = "name";
+    public static final String FORMULA_COLUMN = "formula";
+    public static final String POSITIONS_COLUMN = "positions";
 
     public static final String BOX_1_COLUMN = "box_1";
     public static final String BOX_2_COLUMN = "box_2";
@@ -15,10 +17,6 @@ public class FingeringDatabase {
         public static final String TABLE_NAME = "Scale";
 
         public static final String NAME_COLUMN = "name";
-    }
-
-    public static class PatternEntry implements BaseColumns {
-        public static final String TABLE_NAME = "Pattern";
     }
 
     public static class AEntry implements BaseColumns {

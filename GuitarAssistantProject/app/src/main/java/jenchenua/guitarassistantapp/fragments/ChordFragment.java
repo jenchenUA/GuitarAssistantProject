@@ -98,8 +98,8 @@ public class ChordFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("className", LOG_TAG);
-                intent.putExtra("tableName", tableName);
-                intent.putExtra("fingeringName", fingeringName);
+                intent.putExtra(MainActivity.TABLE_NAME, tableName);
+                intent.putExtra(MainActivity.FINGERING_NAME, fingeringName);
 
                 startActivity(intent);
             }

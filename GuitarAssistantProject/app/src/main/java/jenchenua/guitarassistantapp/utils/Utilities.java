@@ -28,12 +28,10 @@ public class Utilities {
 
 
     public static void hideSoftKeyboard(Activity activity) {
-        try {
+        if (activity.getCurrentFocus() != null) {
             InputMethodManager inputMethodManager =
                     (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-        } catch (Exception e) {
-            e.printStackTrace();
+                    inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         }
     }
 
@@ -55,13 +53,13 @@ public class Utilities {
                                     .replace(R.id.fragment_container, new ScaleFragment())
                                     .commit();
                             break;
-                        case 2:
+                        /*case 2:
                             Log.i(LOG_TAG, "Click on Chords");
                             activity.getSupportFragmentManager()
                                     .beginTransaction()
                                     .replace(R.id.fragment_container, new ChordFragment())
                                     .commit();
-                            break;
+                            break;*/
                         case 4:
                             Log.i(LOG_TAG, "Click on Version");
                             Toast.makeText(activity.getApplicationContext(), version, Toast.LENGTH_SHORT).show();
@@ -118,9 +116,9 @@ public class Utilities {
                 new PrimaryDrawerItem()
                         .withName(R.string.primary_drawer_item_scales)
                         .withIdentifier(1),
-                new PrimaryDrawerItem()
-                        .withName(R.string.primary_drawer_item_chords)
-                        .withIdentifier(2),
+                //new PrimaryDrawerItem()
+                //        .withName(R.string.primary_drawer_item_chords)
+                //        .withIdentifier(2),
                 new DividerDrawerItem(),
                 new SecondaryDrawerItem()
                         .withName(R.string.secondary_drawer_item_version)

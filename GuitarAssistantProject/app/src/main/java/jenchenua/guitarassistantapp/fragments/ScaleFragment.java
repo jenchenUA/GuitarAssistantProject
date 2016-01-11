@@ -92,8 +92,8 @@ public class ScaleFragment extends android.support.v4.app.Fragment {
 
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra("className", LOG_TAG);
-                intent.putExtra("tableName", ScaleEntry.TABLE_NAME);
-                intent.putExtra("fingeringName", fingeringName);
+                intent.putExtra(MainActivity.TABLE_NAME, ScaleEntry.TABLE_NAME);
+                intent.putExtra(MainActivity.FINGERING_NAME, fingeringName);
 
                 startActivity(intent);
             }
